@@ -1,0 +1,3667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2196f3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Basim Store - Premium Fashion Collection</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2196f3',
+                        secondary: '#bbdefb',
+                        accent: '#1976d2',
+                        dark: '#1a1a1a',
+                        light: '#f8f9fa',
+                        success: '#4caf50',
+                        warning: '#ff9800',
+                        error: '#f44336',
+                        info: '#00bcd4'
+                    },
+                    fontFamily: {
+                        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        'heading': ['Poppins', 'SF Pro Display', '-apple-system', 'sans-serif']
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'slide-out': 'slideOut 0.3s ease-in',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'fade-out': 'fadeOut 0.3s ease-in',
+                        'scale-in': 'scaleIn 0.2s ease-out',
+                        'scale-out': 'scaleOut 0.2s ease-in',
+                        'bounce': 'bounce 0.5s ease-in-out',
+                        'pulse-subtle': 'pulse 2s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { transform: 'translateY(100px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideOut: {
+                            '0%': { transform: 'translateY(0)', opacity: '1' },
+                            '100%': { transform: 'translateY(100px)', opacity: '0' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1' },
+                            '100%': { opacity: '0' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        scaleOut: {
+                            '0%': { transform: 'scale(1)', opacity: '1' },
+                            '100%': { transform: 'scale(0.95)', opacity: '0' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+                        'modal': '0 20px 60px rgba(0, 0, 0, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Professional Mobile App Styles */
+        :root {
+            --primary: #2196f3;
+            --secondary: #bbdefb;
+            --accent: #1976d2;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --surface: #ffffff;
+            --background: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border: #e5e7eb;
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            overscroll-behavior-y: contain;
+            touch-action: pan-y;
+            height: 100%;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        /* Bottom Navigation - Professional Style */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: env(safe-area-inset-bottom);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(187, 222, 251, 0.1) 100%);
+            color: var(--primary);
+            transform: translateY(-4px);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+        
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Product Grid - Professional Cards */
+        .product-grid {
+            display: grid;
+            gap: 16px;
+            padding: 12px;
+        }
+        
+        .product-card {
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(33, 150, 243, 0.2);
+        }
+        
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+        
+        /* Product Badges */
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+            z-index: 2;
+        }
+        
+        .badge-discount {
+            background: linear-gradient(135deg, #ff5252, #ff4081);
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+        }
+        
+        .badge-out {
+            background: linear-gradient(135deg, #757575, #9e9e9e);
+        }
+        
+        .badge-featured {
+            background: linear-gradient(135deg, #ff9800, #ffc107);
+        }
+        
+        /* Quick Action Buttons */
+        .quick-actions {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .product-card:hover .quick-actions {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .quick-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .quick-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Product Info */
+        .product-info {
+            padding: 16px;
+        }
+        
+        .product-title {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            max-height: 120px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .product-description::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .product-description::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        
+        .product-description::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .product-description::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #ffb300;
+        }
+        
+        .rating-count {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .original-price {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+        
+        .discount-percent {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--error);
+            background: rgba(244, 67, 54, 0.1);
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 8px;
+        }
+        
+        /* View Description Button */
+        .view-description-btn {
+            background: rgba(33, 150, 243, 0.08);
+            color: var(--primary);
+            border: 1.5px solid rgba(33, 150, 243, 0.3);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            margin-top: 8px;
+        }
+        
+        .view-description-btn:hover {
+            background: rgba(33, 150, 243, 0.15);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+        
+        .view-description-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Add to Cart Button */
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .add-to-cart-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Fullscreen Image Viewer - Professional */
+        .fullscreen-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.98);
+            z-index: 9999;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .fullscreen-viewer.active {
+            display: flex;
+        }
+        
+        .viewer-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .viewer-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            animation: scaleIn 0.3s ease;
+        }
+        
+        .viewer-controls {
+            position: absolute;
+            top: max(env(safe-area-inset-top), 20px);
+            left: 0;
+            right: 0;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .viewer-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .viewer-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+        
+        .viewer-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+        }
+        
+        .viewer-prev { left: 24px; }
+        .viewer-next { right: 24px; }
+        
+        .viewer-counter {
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Modals - Professional */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9990;
+            display: none;
+            align-items: flex-end;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--surface);
+            border-radius: 28px 28px 0 0;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            z-index: 10;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.05);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(0,0,0,0.1);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(90vh - 140px);
+        }
+        
+        /* Product Description Modal */
+        .description-modal {
+            align-items: center;
+        }
+        
+        .description-modal .modal-content {
+            max-width: 600px;
+            border-radius: 24px;
+            max-height: 80vh;
+            margin: auto;
+        }
+        
+        .description-text {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+            line-height: 1.6;
+        }
+        
+        .description-text::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .description-text::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        
+        .description-text::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .description-text::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        /* Form Elements - Professional */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--surface);
+            color: var(--text-primary);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+        
+        .form-control:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+        
+        /* Buttons - Professional */
+        .btn {
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(33, 150, 243, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(33, 150, 243, 0.1);
+            color: var(--primary);
+            border: 2px solid rgba(33, 150, 243, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(33, 150, 243, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #66bb6a);
+            color: white;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        /* Loading States */
+        .loading-spinner {
+            border: 4px solid rgba(33, 150, 243, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            max-width: 340px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .toast-success {
+            border-left-color: var(--success);
+        }
+        
+        .toast-error {
+            border-left-color: var(--error);
+        }
+        
+        .toast-warning {
+            border-left-color: var(--warning);
+        }
+        
+        .toast-info {
+            border-left-color: var(--info);
+        }
+        
+        /* Responsive Grid */
+        @media (max-width: 640px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 8px;
+            }
+        }
+        
+        @media (min-width: 641px) and (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+                padding: 12px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                padding: 16px;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .product-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 24px;
+                padding: 20px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .bottom-nav {
+                max-width: 600px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 24px 24px 0 0;
+                bottom: 20px;
+                box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+            }
+        }
+        
+        /* Safe Area Support */
+        .safe-area-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Scrollbar Styling */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        /* Utility Classes */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .bg-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+        
+        .shadow-soft {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .shadow-hard {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+        
+        /* Category Badges */
+        .category-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: rgba(33, 150, 243, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-badge:hover {
+            background: rgba(33, 150, 243, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .category-badge.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        /* Filter Chips */
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .filter-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .filter-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+        
+        /* Cart Item */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--surface);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
+        }
+        
+        /* Quantity Control */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 4px;
+        }
+        
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: white;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .quantity-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .empty-state-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .empty-state-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="font-sans bg-light text-dark">
+    <!-- Top Navigation -->
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-xl shadow-sm z-50 safe-area-top border-b border-gray-100">
+        <div class="px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button onclick="openSidebar()" class="nav-btn p-2.5 rounded-xl hover:bg-gray-100 transition-colors">
+                    <span class="text-2xl">☰</span>
+                </button>
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-bold text-gradient">Basim Store</h1>
+                    <p class="text-xs text-gray-500">Premium Fashion Collection</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="openSearch()" class="nav-btn p-2.5 rounded-xl hover:bg-gray-100 transition-colors">
+                    <span class="text-xl">🔍</span>
+                </button>
+                <button onclick="openWishlist()" class="nav-btn p-2.5 rounded-xl hover:bg-gray-100 transition-colors relative">
+                    <span class="text-xl">❤️</span>
+                    <span id="wishlistBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden shadow">0</span>
+                </button>
+                <button onclick="openCartModal()" class="nav-btn p-2.5 rounded-xl hover:bg-gray-100 transition-colors relative">
+                    <span class="text-xl">🛒</span>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden shadow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 will-change-transform safe-area-top">
+        <div class="p-6 h-full overflow-y-auto scrollbar-thin">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex flex-col">
+                    <h2 class="text-2xl font-bold text-primary">Menu</h2>
+                    <p class="text-sm text-gray-500">Navigate through sections</p>
+                </div>
+                <button onclick="closeSidebar()" class="modal-close">×</button>
+            </div>
+            
+            <div class="space-y-2 mb-8">
+                <div class="flex items-center gap-3 p-4 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl border border-primary/10">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xl">
+                        👤
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-semibold">Welcome Guest!</p>
+                        <p class="text-sm text-gray-500">Sign in for better experience</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-1">
+                <button onclick="switchSection('home'); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">🏠</span>
+                    <span class="font-medium flex-1">Home</span>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="switchSection('collection'); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">👕</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">All Collection</span>
+                        <span class="text-sm text-gray-500">1600+ Products</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openCategoriesModal(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">📁</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">Categories</span>
+                        <span class="text-sm text-gray-500">8+ Categories</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openWishlist(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">❤️</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">Wishlist</span>
+                        <span id="sidebarWishlistCount" class="text-sm text-gray-500">0 items</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openCartModal(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">🛒</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">My Cart</span>
+                        <span id="sidebarCartCount" class="text-sm text-gray-500">0 items</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openOrders(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">📦</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">My Orders</span>
+                        <span class="text-sm text-gray-500">Order history</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openAccount(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">👤</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">Account</span>
+                        <span class="text-sm text-gray-500">Profile & settings</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="openSettings(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">⚙️</span>
+                    <div class="flex-1">
+                        <span class="font-medium block">Settings</span>
+                        <span class="text-sm text-gray-500">App preferences</span>
+                    </div>
+                    <span class="text-gray-400">→</span>
+                </button>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-200">
+                <button onclick="showHelp()" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">❓</span>
+                    <span class="font-medium flex-1">Help & Support</span>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="showAbout()" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">ℹ️</span>
+                    <span class="font-medium flex-1">About App</span>
+                    <span class="text-gray-400">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeSidebar()"></div>
+
+    <!-- Main Content -->
+    <main id="appContent" class="pt-20 pb-24 px-2 overflow-y-auto h-full scrollbar-thin safe-area-top safe-area-bottom">
+        <!-- Home Content -->
+        <div id="homeContent" class="section-content active">
+            <!-- Hero Banner -->
+            <div class="mx-2 mb-6">
+                <div class="relative rounded-3xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-primary via-accent to-blue-600 p-6 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-24 translate-x-24"></div>
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-16 translate-y-16"></div>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-2xl font-bold mb-2 animate-fade-in">Welcome to Basim Store</h2>
+                            <p class="mb-6 opacity-90 text-lg">Discover 1600+ exclusive fashion products</p>
+                            <div class="flex gap-3">
+                                <button onclick="switchSection('collection')" class="bg-white text-primary px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all shadow-md hover:-translate-y-1">
+                                    Start Shopping →
+                                </button>
+                                <button onclick="openCategoriesModal()" class="bg-white/20 text-white px-6 py-3 rounded-full font-semibold hover:bg-white/30 transition-all backdrop-blur-sm">
+                                    Browse Categories
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-3 mx-2 mb-6">
+                <div class="bg-white rounded-2xl p-4 text-center shadow-soft hover:shadow-hard transition-shadow hover-lift">
+                    <div class="text-2xl font-bold text-primary mb-1">1600+</div>
+                    <div class="text-xs text-gray-600">Total Products</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 text-center shadow-soft hover:shadow-hard transition-shadow hover-lift">
+                    <div class="text-2xl font-bold text-primary mb-1">8</div>
+                    <div class="text-xs text-gray-600">Categories</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 text-center shadow-soft hover:shadow-hard transition-shadow hover-lift">
+                    <div class="text-2xl font-bold text-primary mb-1">⭐ 4.8</div>
+                    <div class="text-xs text-gray-600">Avg Rating</div>
+                </div>
+            </div>
+
+            <!-- Quick Categories -->
+            <div class="mx-2 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold">Shop by Category</h3>
+                    <button onclick="openCategoriesModal()" class="text-primary text-sm font-medium flex items-center gap-1">
+                        View All <span>→</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-4 gap-3">
+                    <button onclick="filterProducts('all')" class="category-badge active flex-col p-4">
+                        <div class="text-2xl mb-2">👕</div>
+                        <span class="text-xs font-medium">All</span>
+                    </button>
+                    <button onclick="filterProducts('shirt')" class="category-badge flex-col p-4">
+                        <div class="text-2xl mb-2">👔</div>
+                        <span class="text-xs font-medium">Shirts</span>
+                    </button>
+                    <button onclick="filterProducts('dress')" class="category-badge flex-col p-4">
+                        <div class="text-2xl mb-2">👗</div>
+                        <span class="text-xs font-medium">Dresses</span>
+                    </button>
+                    <button onclick="openCategoriesModal()" class="category-badge flex-col p-4">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <span class="text-xs font-medium">More</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ALL PRODUCTS (1600) -->
+            <div class="mx-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">All Products (1600+)</h3>
+                    <button onclick="openCategoriesModal()" class="text-primary text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                        Categories <span>→</span>
+                    </button>
+                </div>
+                <div id="homeProductsGrid" class="product-grid">
+                    <!-- ALL 1600 PRODUCTS WILL BE LOADED HERE -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection Content -->
+        <div id="collectionContent" class="section-content">
+            <div class="mx-2">
+                <!-- Collection Header -->
+                <div class="flex flex-col gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold">👕 Complete Collection</h2>
+                        <p class="text-sm text-gray-600 mt-1">1600+ Products Available</p>
+                    </div>
+                    
+                    <!-- Search and Filter Bar -->
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 relative">
+                            <input type="text" 
+                                   placeholder="Search products..." 
+                                   class="w-full p-3 pl-12 bg-gray-100 rounded-2xl border-2 border-transparent focus:border-primary focus:bg-white transition-all outline-none"
+                                   oninput="searchProducts(this.value)"
+                                   onclick="openSearch()">
+                            <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">🔍</span>
+                        </div>
+                        <button onclick="openFiltersModal()" class="p-3.5 rounded-2xl bg-gray-100 hover:bg-gray-200 transition-colors">
+                            <span class="text-lg">⚙️</span>
+                        </button>
+                        <button onclick="toggleView()" class="p-3.5 rounded-2xl bg-gray-100 hover:bg-gray-200 transition-colors">
+                            <span id="viewToggle" class="text-lg">⛶</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Category Filters -->
+                <div class="mb-6">
+                    <div class="flex overflow-x-auto gap-3 pb-3 scrollbar-thin px-1">
+                        <button onclick="filterProducts('all')" class="filter-chip active">
+                            All
+                        </button>
+                        <button onclick="filterProducts('shirt')" class="filter-chip">
+                            👔 Shirts
+                        </button>
+                        <button onclick="filterProducts('dress')" class="filter-chip">
+                            👗 Dresses
+                        </button>
+                        <button onclick="filterProducts('pants')" class="filter-chip">
+                            👖 Pants
+                        </button>
+                        <button onclick="filterProducts('jacket')" class="filter-chip">
+                            🧥 Jackets
+                        </button>
+                        <button onclick="filterProducts('sports')" class="filter-chip">
+                            🏃 Sports
+                        </button>
+                        <button onclick="filterProducts('party')" class="filter-chip">
+                            🎉 Party
+                        </button>
+                        <button onclick="openCategoriesModal()" class="filter-chip">
+                            📁 More
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="product-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+                
+                <!-- Loading and End Indicators -->
+                <div id="loadingIndicator" class="hidden">
+                    <div class="text-center py-8">
+                        <div class="loading-spinner mx-auto mb-4"></div>
+                        <p class="text-gray-600">Loading more products...</p>
+                    </div>
+                </div>
+                
+                <div id="endOfResults" class="hidden">
+                    <div class="text-center py-8">
+                        <p class="text-gray-600">✨ You've seen all products!</p>
+                        <p class="text-sm text-gray-500 mt-1">Check back soon for new arrivals</p>
+                    </div>
+                </div>
+                
+                <!-- No Results -->
+                <div id="noResults" class="hidden">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-title">No products found</div>
+                        <div class="empty-state-text">Try different search terms or filters</div>
+                        <button onclick="clearSearchAndFilters()" class="btn btn-secondary mt-4">
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav safe-area-bottom">
+        <button onclick="switchSection('home')" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button onclick="switchSection('collection')" class="nav-item">
+            <span class="nav-icon">👕</span>
+            <span class="nav-label">Shop</span>
+        </button>
+        <button onclick="openWishlist()" class="nav-item">
+            <span class="nav-icon">❤️</span>
+            <span class="nav-label">Wishlist</span>
+        </button>
+        <button onclick="openCartModal()" class="nav-item">
+            <span class="nav-icon">🛒</span>
+            <span class="nav-label">Cart</span>
+        </button>
+        <button onclick="openSidebar()" class="nav-item">
+            <span class="nav-icon">☰</span>
+            <span class="nav-label">More</span>
+        </button>
+    </nav>
+
+    <!-- Full Screen Image Viewer -->
+    <div id="fullscreenViewer" class="fullscreen-viewer">
+        <div class="viewer-container">
+            <div class="viewer-controls">
+                <button onclick="closeFullscreenViewer()" class="viewer-btn">×</button>
+                <div class="viewer-counter" id="fullscreenCounter">1/4</div>
+            </div>
+            <button onclick="prevFullscreenImage()" class="viewer-nav viewer-prev viewer-btn">❮</button>
+            <img id="fullscreenImage" src="" alt="" class="viewer-image">
+            <button onclick="nextFullscreenImage()" class="viewer-nav viewer-next viewer-btn">❯</button>
+        </div>
+    </div>
+
+    <!-- Product Description Modal -->
+    <div id="descriptionModal" class="modal-overlay description-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="descriptionProductTitle">Product Description</h3>
+                    <p class="modal-subtitle" id="descriptionProductCategory">Category</p>
+                </div>
+                <button onclick="closeDescriptionModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="descriptionText" class="description-text">
+                    <!-- Product description will be loaded here -->
+                </div>
+            </div>
+            <div class="p-6 border-t bg-gradient-to-b from-gray-50 to-white">
+                <button onclick="closeDescriptionModal()" class="btn btn-secondary">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Shopping Cart</h3>
+                    <p class="modal-subtitle" id="cartCountText">0 items in cart</p>
+                </div>
+                <button onclick="closeCartModal()" class="modal-close">×</button>
+            </div>
+            <div id="cartItems" class="modal-body">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="p-6 border-t bg-gradient-to-b from-gray-50 to-white">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-semibold">Subtotal:</span>
+                        <span class="text-xl font-bold text-primary">₨ <span id="cartSubtotal">0</span></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-semibold">Shipping:</span>
+                        <span class="text-xl font-bold text-gray-600">₨ 200</span>
+                    </div>
+                    <div class="border-t pt-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xl font-bold">Total:</span>
+                            <p class="text-sm text-gray-500">Inclusive of all taxes</p>
+                        </div>
+                        <span class="text-2xl font-bold text-primary">₨ <span id="cartTotal">0</span></span>
+                    </div>
+                </div>
+                <button onclick="openCheckoutModal()" class="btn btn-primary mt-6">
+                    <span>Proceed to Checkout</span>
+                    <span>→</span>
+                </button>
+                <button onclick="continueShopping()" class="btn btn-secondary mt-3">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">My Wishlist</h3>
+                    <p class="modal-subtitle" id="wishlistCountText">0 items saved</p>
+                </div>
+                <button onclick="closeWishlistModal()" class="modal-close">×</button>
+            </div>
+            <div id="wishlistItems" class="modal-body">
+                <!-- Wishlist items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="modal-content max-h-[95vh]">
+            <div class="modal-header sticky top-0 z-10">
+                <div>
+                    <h3 class="modal-title">Checkout</h3>
+                    <p class="modal-subtitle">Complete your purchase</p>
+                </div>
+                <button onclick="closeCheckoutModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" class="space-y-6">
+                    <!-- Checkout form will be loaded here -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Search Products</h3>
+                    <p class="modal-subtitle">Find your favorite items</p>
+                </div>
+                <button onclick="closeSearchModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="relative mb-6">
+                    <input type="text" id="searchInput" placeholder="What are you looking for?" 
+                           class="form-control pl-12" autocomplete="off">
+                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-400">🔍</span>
+                    <button type="button" onclick="clearSearchInput()" 
+                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden" 
+                            id="clearSearchBtn">×</button>
+                </div>
+                
+                <!-- Recent Searches -->
+                <div id="searchHistorySection" class="mb-6">
+                    <h4 class="font-semibold mb-3 text-gray-700">Recent Searches</h4>
+                    <div id="recentSearches" class="flex flex-wrap gap-2">
+                        <!-- Recent searches will appear here -->
+                    </div>
+                </div>
+                
+                <!-- Search Results -->
+                <div id="searchResults">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Modal -->
+    <div id="categoriesModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">All Categories</h3>
+                    <p class="modal-subtitle">Browse by category</p>
+                </div>
+                <button onclick="closeCategoriesModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid grid-cols-3 gap-4">
+                    <button onclick="filterProducts('all'); closeCategoriesModal();" class="category-badge active flex-col p-4">
+                        <div class="text-3xl mb-2">👕</div>
+                        <span class="text-sm font-medium">All</span>
+                    </button>
+                    <button onclick="filterProducts('shirt'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">👔</div>
+                        <span class="text-sm font-medium">Shirts</span>
+                    </button>
+                    <button onclick="filterProducts('dress'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">👗</div>
+                        <span class="text-sm font-medium">Dresses</span>
+                    </button>
+                    <button onclick="filterProducts('pants'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">👖</div>
+                        <span class="text-sm font-medium">Pants</span>
+                    </button>
+                    <button onclick="filterProducts('jacket'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">🧥</div>
+                        <span class="text-sm font-medium">Jackets</span>
+                    </button>
+                    <button onclick="filterProducts('sports'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">🏃</div>
+                        <span class="text-sm font-medium">Sports</span>
+                    </button>
+                    <button onclick="filterProducts('party'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">🎉</div>
+                        <span class="text-sm font-medium">Party</span>
+                    </button>
+                    <button onclick="filterProducts('top'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">👚</div>
+                        <span class="text-sm font-medium">Tops</span>
+                    </button>
+                    <button onclick="filterProducts('skirt'); closeCategoriesModal();" class="category-badge flex-col p-4">
+                        <div class="text-3xl mb-2">👗</div>
+                        <span class="text-sm font-medium">Skirts</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Modal -->
+    <div id="filtersModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Filters</h3>
+                    <p class="modal-subtitle">Refine your search</p>
+                </div>
+                <button onclick="closeFiltersModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="space-y-6">
+                    <!-- Price Range -->
+                    <div>
+                        <h4 class="font-semibold mb-4 text-gray-700">Price Range</h4>
+                        <div class="space-y-3">
+                            <input type="range" min="0" max="10000" value="10000" class="w-full" id="priceRange">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>₨ 0</span>
+                                <span id="maxPriceValue">₨ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sort By -->
+                    <div>
+                        <h4 class="font-semibold mb-4 text-gray-700">Sort By</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="popular" checked class="mr-3">
+                                <span>Popularity</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="newest" class="mr-3">
+                                <span>Newest First</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="price-low" class="mr-3">
+                                <span>Price: Low to High</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="price-high" class="mr-3">
+                                <span>Price: High to Low</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t bg-gray-50">
+                <div class="flex gap-3">
+                    <button onclick="applyFilters()" class="btn btn-primary flex-1">
+                        Apply Filters
+                    </button>
+                    <button onclick="resetFilters()" class="btn btn-secondary">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media Links Modal -->
+    <div id="socialMediaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Follow Us on Social Media</h3>
+                    <p class="modal-subtitle">Stay updated with latest products</p>
+                </div>
+                <button onclick="closeSocialMediaModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="space-y-4">
+                    <!-- Facebook -->
+                    <a href="https://web.facebook.com/basim.bin.malik.dasti" target="_blank" 
+                       class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl hover:bg-blue-100 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white text-xl">
+                            f
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-blue-700">Facebook</h4>
+                            <p class="text-sm text-gray-600">Follow for latest updates and offers</p>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </a>
+                    
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@cryptixgamer0?lang=en" target="_blank"
+                       class="flex items-center gap-4 p-4 bg-black rounded-2xl hover:bg-gray-900 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-black border border-gray-700 flex items-center justify-center text-white text-xl">
+                            🎵
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-white">TikTok</h4>
+                            <p class="text-sm text-gray-300">Watch product videos and reviews</p>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </a>
+                    
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/channel/UCf7v9aqnRnFwBUhprhVvOiQ" target="_blank"
+                       class="flex items-center gap-4 p-4 bg-red-50 rounded-2xl hover:bg-red-100 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white text-xl">
+                            ▶️
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-red-700">YouTube</h4>
+                            <p class="text-sm text-gray-600">Watch product demos and tutorials</p>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/nawabwrite786/" target="_blank"
+                       class="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl hover:opacity-90 transition-opacity cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-purple-600 text-xl">
+                            📸
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-white">Instagram</h4>
+                            <p class="text-sm text-white/90">See product photos and stories</p>
+                        </div>
+                        <span class="text-white">→</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <p class="text-center text-gray-600 text-sm">
+                        Follow us on social media for exclusive offers, new arrivals, and fashion tips!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/70 z-[9999] flex items-center justify-center hidden backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-3xl flex flex-col items-center shadow-2xl animate-scale-in">
+            <div class="loading-spinner mb-4"></div>
+            <p class="text-dark font-medium">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-4 right-4 z-[9998] space-y-2 max-w-md"></div>
+
+<script>
+// ==============================
+// REAL PRODUCT IMAGE LINKS
+// ==============================
+
+const realImageLinks = [
+    "https://content.public.markaz.app/markazimagevideo/public/products/1119-11-683915-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1119-11-683911-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1119-11-683908-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1119-11-683902-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-128-683848-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-128-683843-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-128-683844-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-128-683847-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683295-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683294-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683292-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683289-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683287-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683286-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683284-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-683285-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-11-683306-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-11-683305-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-11-683304-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-11-683302-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-682368-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-682364-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-682369-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-682365-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-681250-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-681250-product-2.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-681251-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-95-681251-product-2.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/729-11-680907-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/729-11-680905-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/729-11-680904-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/729-11-680906-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-14-680809-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-14-680810-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-14-680808-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-14-680806-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680800-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680801-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680798-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680802-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680493-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680492-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680491-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680490-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-680484-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-680482-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-680481-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-680480-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-11-680077-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-11-680075-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-11-680076-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-11-680079-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680073-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680072-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680070-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680071-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680064-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680062-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680063-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-95-680061-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-679781-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-679780-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1993-10-679779-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678684-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678682-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678683-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678681-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678468-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678467-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678465-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1993-10-678464-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/714-220-673832-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/714-220-673830-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/714-220-673831-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/714-220-673828-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/399-9-669346-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/399-9-669346-product-2.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1689-11-669068-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/products/1689-11-669068-product-2.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-11-669067-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-11-669066-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-95-667619-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-95-667618-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-95-667617-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1689-95-667616-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1680-95-665909-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1354-95-665900-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1354-95-665901-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1680-95-665905-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1680-95-665906-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1593-95-665610-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1593-95-665611-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1593-95-665608-product-1.webp",
+    "https://content.public.markaz.app/markazimagevideo/public/thumbnails/products/1593-95-665609-product-1.webp"
+];
+
+// Duplicate images for 1600 products
+const extendedImageLinks = [...realImageLinks];
+for(let i = 0; i < 10; i++) {
+    extendedImageLinks.push(...realImageLinks);
+}
+
+// ==============================
+// PAKISTAN GEOGRAPHICAL DATA WITH COMPLETE TEHSILS
+// ==============================
+
+const pakistanData = {
+    provinces: {
+        "Punjab": ["Lahore", "Faisalabad", "Rawalpindi", "Gujranwala", "Multan", "Sargodha", "Bahawalpur", "Sialkot", "Gujrat", "Sheikhupura", "Jhelum", "Kasur", "Mianwali", "Toba Tek Singh", "Okara", "Rahim Yar Khan", "Hafizabad", "Attock", "Nankana Sahib", "Chiniot", "Pakpattan", "Khushab", "Mandi Bahauddin", "Bhakkar", "Layyah", "Dera Ghazi Khan", "Rajanpur", "Muzaffargarh", "Khanewal", "Vehari", "Narowal", "Sahiwal", "Lodhran", "Bahawalnagar", "Chakwal"],
+        "Sindh": ["Karachi", "Hyderabad", "Sukkur", "Larkana", "Mirpur Khas", "Nawabshah", "Khairpur", "Thatta", "Badin", "Sanghar", "Shikarpur", "Jacobabad", "Ghotki", "Dadu", "Jamshoro", "Matli", "Tando Allahyar", "Tando Muhammad Khan", "Kamber", "Shahdadkot"],
+        "Khyber Pakhtunkhwa": ["Peshawar", "Mardan", "Mingora", "Kohat", "Abbottabad", "Dera Ismail Khan", "Mansehra", "Swabi", "Nowshera", "Charsadda", "Bannu", "Haripur", "Karak", "Hangu", "Tank", "Dir", "Batkhela", "Timergara", "Parachinar", "Lakki Marwat"],
+        "Balochistan": ["Quetta", "Turbat", "Khuzdar", "Chaman", "Hub", "Gwadar", "Dera Murad Jamali", "Dera Allahyar", "Usta Muhammad", "Sibi", "Loralai", "Zhob", "Panjgur", "Qila Saifullah", "Kohlu", "Barkhan", "Musa Khel", "Ziarat", "Awaran", "Harnai"],
+        "Gilgit-Baltistan": ["Gilgit", "Skardu", "Chilas", "Ghizer", "Astore", "Diamer", "Ghanche", "Kharmang", "Shigar", "Nagar", "Roundu"],
+        "Azad Jammu & Kashmir": ["Muzaffarabad", "Mirpur", "Kotli", "Bhimber", "Rawalakot", "Bagh", "Haveli", "Neelum Valley", "Sudhanoti", "Poonch"],
+        "Islamabad Capital Territory": ["Islamabad"]
+    },
+    
+    tehsils: {
+        // Punjab Tehsils (Complete)
+        "Lahore": ["Lahore City", "Lahore Cantt", "Raiwind", "Shalimar", "Model Town", "Gulberg", "Samnabad", "Allama Iqbal Town", "Nishtar Town", "Aziz Bhatti Town", "Wahga Town", "Data Gunj Baksh Town", "Samanabad Town"],
+        "Faisalabad": ["Faisalabad City", "Jaranwala", "Samundri", "Tandlianwala", "Chak Jhumra", "Iqbal Town", "Madina Town", "Jinnah Town"],
+        "Rawalpindi": ["Rawalpindi City", "Rawalpindi Cantt", "Taxila", "Gujar Khan", "Kahuta", "Kallar Syedan", "Murree", "Kotli Sattian"],
+        "Gujranwala": ["Gujranwala City", "Gujranwala Cantt", "Kamoke", "Nowshera Virkan", "Wazirabad"],
+        "Multan": ["Multan City", "Multan Sadar", "Shujabad", "Jalalpur Pirwala", "Qadirpur Rawan"],
+        "Sargodha": ["Sargodha City", "Sargodha Cantt", "Bhalwal", "Sillanwali", "Sahiwal", "Kot Momin"],
+        "Bahawalpur": ["Bahawalpur City", "Bahawalpur Sadar", "Ahmadpur East", "Khairpur Tamewali", "Hasilpur", "Yazman"],
+        "Sialkot": ["Sialkot City", "Sialkot Cantt", "Daska", "Pasrur", "Sambrial"],
+        "Gujrat": ["Gujrat City", "Kharian", "Sarai Alamgir", "Kunjah", "Dinga"],
+        "Sheikhupura": ["Sheikhupura City", "Ferozewala", "Muridke", "Sharqpur", "Safdarabad"],
+        "Jhelum": ["Jhelum City", "Pind Dadan Khan", "Sohawa", "Dina"],
+        "Kasur": ["Kasur City", "Chunian", "Pattoki", "Kot Radha Kishan"],
+        "Mianwali": ["Mianwali City", "Isakhel", "Kalabagh", "Piplan"],
+        "Toba Tek Singh": ["Toba Tek Singh City", "Gojra", "Kamalia", "Pirmahal"],
+        "Okara": ["Okara City", "Renala Khurd", "Depalpur", "Haveli Lakha"],
+        "Rahim Yar Khan": ["Rahim Yar Khan City", "Sadiqabad", "Khanpur", "Liaquatpur"],
+        "Hafizabad": ["Hafizabad City", "Pindi Bhattian", "Jalalpur Bhattian"],
+        "Attock": ["Attock City", "Fateh Jang", "Hassan Abdal", "Jand", "Pindi Gheb"],
+        "Nankana Sahib": ["Nankana Sahib City", "Sangla Hill", "Shah Kot"],
+        "Chiniot": ["Chiniot City", "Lalian", "Bhawana"],
+        "Pakpattan": ["Pakpattan City", "Arifwala"],
+        "Khushab": ["Khushab City", "Noorpur Thal", "Quaidabad"],
+        "Mandi Bahauddin": ["Mandi Bahauddin City", "Phalia", "Malakwal"],
+        "Bhakkar": ["Bhakkar City", "Darya Khan", "Kallur Kot", "Mankera"],
+        "Layyah": ["Layyah City", "Chobara", "Karor Lal Esan"],
+        "Dera Ghazi Khan": ["Dera Ghazi Khan City", "Taunsa", "Kot Chutta", "De-Excluded Area"],
+        "Rajanpur": ["Rajanpur City", "Jampur", "Rojhan"],
+        "Muzaffargarh": ["Muzaffargarh City", "Ali Pur", "Jatoi", "Kot Addu"],
+        "Khanewal": ["Khanewal City", "Mian Channu", "Kabirwala", "Jahania"],
+        "Vehari": ["Vehari City", "Burewala", "Mailsi"],
+        "Narowal": ["Narowal City", "Shakargarh", "Zafarwal"],
+        "Sahiwal": ["Sahiwal City", "Chichawatni", "Harappa"],
+        "Lodhran": ["Lodhran City", "Kahror Pacca", "Dunyapur"],
+        "Bahawalnagar": ["Bahawalnagar City", "Chishtian", "Haroonabad", "Minchinabad"],
+        "Chakwal": ["Chakwal City", "Talagang", "Choa Saidan Shah", "Kallar Kahar"],
+        
+        // Sindh Tehsils (Complete)
+        "Karachi": ["Karachi East", "Karachi West", "Karachi South", "Karachi Central", "Malir", "Korangi", "Gulshan Town", "Jamshed Town", "Liagatabad Town", "Nazimabad Town", "New Karachi Town", "Orangi Town", "SITE Town"],
+        "Hyderabad": ["Hyderabad City", "Latifabad", "Qasimabad", "Hala", "Matli"],
+        "Sukkur": ["Sukkur City", "Rohri", "Pano Aqil", "Salehpat"],
+        "Larkana": ["Larkana City", "Ratodero", "Dokri", "Bakrani"],
+        "Mirpur Khas": ["Mirpur Khas City", "Digri", "Kot Ghulam Muhammad", "Hussain Bux Mari"],
+        "Nawabshah": ["Nawabshah City", "Daur", "Sakrand", "Bandhi"],
+        "Khairpur": ["Khairpur City", "Kot Diji", "Nara", "Kingri"],
+        "Thatta": ["Thatta City", "Mirpur Sakro", "Keti Bandar", "Ghorabari"],
+        "Badin": ["Badin City", "Talhar", "Golarchi", "Matli"],
+        "Sanghar": ["Sanghar City", "Shahdadpur", "Tando Adam", "Sinjhoro"],
+        "Shikarpur": ["Shikarpur City", "Lakhi", "Khanpur", "Garhi Yasin"],
+        "Jacobabad": ["Jacobabad City", "Garhi Khairo", "Thul", "Kashmore"],
+        "Ghotki": ["Ghotki City", "Mirpur Mathelo", "Ubauro", "Daharki"],
+        "Dadu": ["Dadu City", "Johi", "Khairpur Nathan Shah", "Mehar"],
+        "Jamshoro": ["Jamshoro City", "Kotri", "Sehwan", "Manjhand"],
+        "Matli": ["Matli City", "Tando Bago", "Bulri Shah Karim"],
+        "Tando Allahyar": ["Tando Allahyar City", "Chamber", "Jhando Mari"],
+        "Tando Muhammad Khan": ["Tando Muhammad Khan City", "Bulri Shah Karim"],
+        "Kamber": ["Kamber City", "Warah", "Miro Khan"],
+        "Shahdadkot": ["Shahdadkot City", "Kambar", "Miro Khan", "Nasirabad"],
+        
+        // Khyber Pakhtunkhwa Tehsils (Complete)
+        "Peshawar": ["Peshawar City", "Peshawar Cantt", "Charsadda Road", "University Town", "Hayatabad"],
+        "Mardan": ["Mardan City", "Takht Bhai", "Katlang", "Rustam"],
+        "Mingora": ["Mingora City", "Barikot", "Khwazakhela", "Charbagh"],
+        "Kohat": ["Kohat City", "Kohat Cantt", "Lachi", "Dara Adam Khel"],
+        "Abbottabad": ["Abbottabad City", "Havelian", "Sherwan", "Lora"],
+        "Dera Ismail Khan": ["Dera Ismail Khan City", "Kulachi", "Paharpur", "Paroa"],
+        "Mansehra": ["Mansehra City", "Baffa", "Oghi", "Balakot"],
+        "Swabi": ["Swabi City", "Topi", "Lahor", "Razar"],
+        "Nowshera": ["Nowshera City", "Jehangira", "Pabbi", "Risalpur"],
+        "Charsadda": ["Charsadda City", "Tangi", "Shabqadar", "Umerzai"],
+        "Bannu": ["Bannu City", "Domel", "Baka Khel", "Miryan"],
+        "Haripur": ["Haripur City", "Khanpur", "Ghazi", "Hattar"],
+        "Karak": ["Karak City", "Takht-e-Nasrati", "Banda Daud Shah"],
+        "Hangu": ["Hangu City", "Tall", "Dozan"],
+        "Tank": ["Tank City", "Kulachi"],
+        "Dir": ["Dir City", "Wari", "Munda", "Kumrat"],
+        "Batkhela": ["Batkhela City", "Dargai", "Thana"],
+        "Timergara": ["Timergara City", "Lal Qilla", "Munda"],
+        "Parachinar": ["Parachinar City", "Sadar", "Lower Kurram"],
+        "Lakki Marwat": ["Lakki Marwat City", "Sari Naurang", "Dadiwala"],
+        
+        // Balochistan Tehsils (Complete)
+        "Quetta": ["Quetta City", "Quetta Cantt", "Sariab", "Panjpai", "Kuchlak"],
+        "Turbat": ["Turbat City", "Tump", "Buleda", "Dasht"],
+        "Khuzdar": ["Khuzdar City", "Wadh", "Moola", "Zeeri"],
+        "Chaman": ["Chaman City", "Qilla Abdullah", "Dobandi"],
+        "Hub": ["Hub City", "Uthal", "Winder"],
+        "Gwadar": ["Gwadar City", "Pasni", "Ormara", "Jiwani"],
+        "Dera Murad Jamali": ["Dera Murad Jamali City", "Usta Muhammad", "Gandakha"],
+        "Dera Allahyar": ["Dera Allahyar City", "Sohbatpur", "Khangarh"],
+        "Usta Muhammad": ["Usta Muhammad City", "Dera Murad Jamali", "Gandakha"],
+        "Sibi": ["Sibi City", "Lehri", "Kotri", "Sangan"],
+        "Loralai": ["Loralai City", "Duki", "Bori", "Mekhtar"],
+        "Zhob": ["Zhob City", "Qamar Din Karez", "Ashwat", "Kakar Khurasan"],
+        "Panjgur": ["Panjgur City", "Gichk", "Parome"],
+        "Qila Saifullah": ["Qila Saifullah City", "Muslim Bagh", "Khost"],
+        "Kohlu": ["Kohlu City", "Kahan", "Mawand"],
+        "Barkhan": ["Barkhan City", "Naseerabad", "Dera Bugti"],
+        "Musa Khel": ["Musa Khel City", "Kingri", "Drazinda"],
+        "Ziarat": ["Ziarat City", "Sanjawi", "Sinjawi"],
+        "Awaran": ["Awaran City", "Jhal Jhao", "Mashkai"],
+        "Harnai": ["Harnai City", "Shahrag", "Khost"],
+        
+        // Gilgit-Baltistan Tehsils (Complete)
+        "Gilgit": ["Gilgit City", "Jutial", "Nomal", "Danyor"],
+        "Skardu": ["Skardu City", "Shigar", "Kharmang", "Roundu"],
+        "Chilas": ["Chilas City", "Tangir", "Darel"],
+        "Ghizer": ["Ghizer City", "Gupis", "Yasin", "Punial"],
+        "Astore": ["Astore City", "Gorikot", "Shonter"],
+        "Diamer": ["Diamer City", "Chilas", "Tangir", "Darel"],
+        "Ghanche": ["Ghanche City", "Khaplu", "Mashabrum", "Thalle"],
+        "Kharmang": ["Kharmang City", "Tolti", "Mundik"],
+        "Shigar": ["Shigar City", "Askole", "Basha"],
+        "Nagar": ["Nagar City", "Chalt", "Sumayar", "Hispar"],
+        "Roundu": ["Roundu City", "Shengus", "Thorar"],
+        
+        // Azad Jammu & Kashmir Tehsils (Complete)
+        "Muzaffarabad": ["Muzaffarabad City", "Hattian", "Patika"],
+        "Mirpur": ["Mirpur City", "Dadyal", "Islamgarh"],
+        "Kotli": ["Kotli City", "Fatehpur Thakiala", "Sehnsa"],
+        "Bhimber": ["Bhimber City", "Samahni", "Barnala"],
+        "Rawalakot": ["Rawalakot City", "Thorar", "Hajira"],
+        "Bagh": ["Bagh City", "Dhara", "Hari Ghel"],
+        "Haveli": ["Haveli City", "Kahuta", "Khurshidabad"],
+        "Neelum Valley": ["Neelum Valley City", "Athmuqam", "Sharda"],
+        "Sudhanoti": ["Sudhanoti City", "Pallandri", "Trarkhal"],
+        "Poonch": ["Poonch City", "Abbaspur", "Banjosa"],
+        
+        // Islamabad Tehsils (Complete)
+        "Islamabad": ["Islamabad City", "Sector F", "Sector G", "Sector I", "Sector H", "Bahria Town", "Margalla Town", "Golra", "Koral"]
+    }
+};
+
+// ==============================
+// PRODUCT DATA GENERATION - 1600 PRODUCTS WITH FULL DESCRIPTION
+// ==============================
+
+const FULL_PRODUCT_DESCRIPTION = "Elevate your wardrobe with these stylish fashion items. Crafted from premium fabric, these products feature a classic design for timeless appeal. Available in various sizes, they ensure a comfortable and flattering fit. Perfect for casual outings or everyday wear, this single piece is a must-have for any stylish collection. • Pattern: Plain • Available Sizes: Multiple Sizes • Number Of Pieces: 1 Pc • Color: Multiple Colors • Package Includes: 1 x Product • 41,000+ Satisfied Customers • 91% Of Customers Say These Fit True To Size • Note: There might be an error of 1-3 cm due to manual measurement, and slight color differences may occur as a result of varying lighting and monitor effects.";
+
+const generateProducts = () => {
+    const products = [];
+    const categories = ['shirt', 'dress', 'pants', 'jacket', 'sports', 'party', 'top', 'skirt'];
+    const colors = ['Black', 'White', 'Navy Blue', 'Gray', 'Brown', 'Beige', 'Maroon', 'Olive Green', 'Royal Blue'];
+    const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+    const materials = ['Cotton', 'Polyester', 'Linen', 'Denim', 'Silk', 'Wool'];
+    
+    let imageIndex = 0;
+    
+    for (let i = 1; i <= 1600; i++) {
+        const category = categories[Math.floor(Math.random() * categories.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = sizes[Math.floor(Math.random() * sizes.length)];
+        const material = materials[Math.floor(Math.random() * materials.length)];
+        
+        // Generate 4 unique images for each product
+        const images = [];
+        for (let j = 0; j < 4; j++) {
+            if (imageIndex >= extendedImageLinks.length) {
+                imageIndex = 0;
+            }
+            images.push(extendedImageLinks[imageIndex]);
+            imageIndex++;
+        }
+        
+        // Price calculation
+        const basePrice = Math.floor(Math.random() * 5000) + 1000;
+        const discount = Math.random() > 0.7 ? Math.floor(Math.random() * 40) + 10 : 0;
+        const finalPrice = discount > 0 ? Math.floor(basePrice * (1 - discount/100)) : basePrice;
+        
+        // Rating calculation
+        const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
+        const reviews = Math.floor(Math.random() * 200) + 10;
+        
+        // Product name
+        const productNames = {
+            'shirt': ['Formal Shirt', 'Casual T-Shirt', 'Polo Shirt', 'Designer Shirt', 'Linen Shirt'],
+            'dress': ['Evening Dress', 'Casual Dress', 'Party Gown', 'Maxi Dress', 'Summer Dress'],
+            'pants': ['Jeans', 'Chinos', 'Formal Trousers', 'Cargo Pants', 'Joggers'],
+            'jacket': ['Leather Jacket', 'Denim Jacket', 'Bomber Jacket', 'Blazer', 'Windbreaker'],
+            'sports': ['Track Suit', 'Sports Tee', 'Gym Shorts', 'Training Pants', 'Sports Jacket'],
+            'party': ['Party Wear', 'Designer Outfit', 'Evening Suit', 'Festive Dress', 'Celebration Wear'],
+            'top': ['Casual Top', 'Crop Top', 'Blouse', 'Kurti', 'Designer Top'],
+            'skirt': ['Mini Skirt', 'Midi Skirt', 'Pencil Skirt', 'A-Line Skirt', 'Pleated Skirt']
+        };
+        
+        const nameType = productNames[category][Math.floor(Math.random() * productNames[category].length)];
+        const name = `${color} ${material} ${nameType} ${i}`;
+        
+        products.push({
+            id: 1000 + i,
+            name: name,
+            price: finalPrice,
+            originalPrice: basePrice,
+            discount: discount,
+            category: category,
+            color: color,
+            size: size,
+            material: material,
+            images: images,
+            rating: parseFloat(rating),
+            reviews: reviews,
+            description: FULL_PRODUCT_DESCRIPTION, // Full description for every product
+            inStock: true, // ALL PRODUCTS ALWAYS IN STOCK
+            isFeatured: i <= 40,
+            isNew: i <= 100,
+            createdAt: new Date(Date.now() - Math.random() * 10000000000).toISOString()
+        });
+    }
+    
+    return products;
+};
+
+// ==============================
+// GLOBAL STATE
+// ==============================
+
+const allProducts = generateProducts();
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+let currentSection = 'home';
+let currentFilter = 'all';
+let currentView = 'grid';
+let currentPage = 0;
+const PRODUCTS_PER_PAGE = 20;
+let displayedProducts = [];
+let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+// ==============================
+// INITIALIZATION
+// ==============================
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+function initializeApp() {
+    // Set initial padding for safe areas
+    document.getElementById('appContent').style.paddingTop = 'calc(env(safe-area-inset-top) + 70px)';
+    document.getElementById('appContent').style.paddingBottom = 'calc(env(safe-area-inset-bottom) + 72px)';
+    
+    // Load ALL 1600 products on home page
+    loadHomeProducts();
+    loadCollectionProducts();
+    
+    // Update UI
+    updateCartUI();
+    updateWishlistUI();
+    updateSearchHistory();
+    
+    // Setup event listeners
+    setupEventListeners();
+    setupInfiniteScroll();
+    
+    // Show welcome message
+    if (!localStorage.getItem('welcomeShown')) {
+        setTimeout(() => {
+            showToast('Welcome to Basim Store! 🛍️', 'success');
+            localStorage.setItem('welcomeShown', 'true');
+        }, 1000);
+    }
+}
+
+// ==============================
+// PRODUCT LOADING
+// ==============================
+
+function loadHomeProducts() {
+    const container = document.getElementById('homeProductsGrid');
+    
+    // ALL 1600 PRODUCTS WILL BE DISPLAYED ON HOME PAGE
+    container.innerHTML = allProducts.map(product => createProductCard(product)).join('');
+}
+
+function loadCollectionProducts() {
+    currentPage = 0;
+    displayedProducts = [];
+    loadMoreProducts();
+}
+
+function loadMoreProducts() {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const endOfResults = document.getElementById('endOfResults');
+    const noResults = document.getElementById('noResults');
+    
+    loadingIndicator.classList.remove('hidden');
+    
+    setTimeout(() => {
+        const start = currentPage * PRODUCTS_PER_PAGE;
+        const end = start + PRODUCTS_PER_PAGE;
+        
+        // Filter products based on current filter
+        let filteredProducts = allProducts;
+        if (currentFilter !== 'all') {
+            filteredProducts = allProducts.filter(p => p.category === currentFilter);
+        }
+        
+        const newProducts = filteredProducts.slice(start, end);
+        
+        if (newProducts.length === 0) {
+            if (displayedProducts.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                endOfResults.classList.remove('hidden');
+            }
+            loadingIndicator.classList.add('hidden');
+            return;
+        }
+        
+        displayedProducts = [...displayedProducts, ...newProducts];
+        currentPage++;
+        
+        renderCollectionProducts();
+        loadingIndicator.classList.add('hidden');
+        noResults.classList.add('hidden');
+        
+        if (displayedProducts.length >= filteredProducts.length) {
+            endOfResults.classList.remove('hidden');
+        }
+    }, 500);
+}
+
+function renderCollectionProducts() {
+    const container = document.getElementById('productsGrid');
+    
+    if (currentPage === 1) {
+        container.innerHTML = displayedProducts.map(product => createProductCard(product)).join('');
+    } else {
+        const newProductsHTML = displayedProducts.slice(-PRODUCTS_PER_PAGE).map(product => createProductCard(product)).join('');
+        container.innerHTML += newProductsHTML;
+    }
+}
+
+function createProductCard(product) {
+    return `
+        <div class="product-card" data-id="${product.id}">
+            <div class="product-image-container">
+                <img src="${product.images[0]}" 
+                     alt="${product.name}"
+                     class="product-image"
+                     loading="lazy"
+                     onclick="openFullscreenViewer('${product.images[0]}', ${product.id})">
+                
+                ${product.discount > 0 ? `
+                    <div class="product-badge badge-discount">
+                        ${product.discount}% OFF
+                    </div>
+                ` : ''}
+                
+                ${product.isNew ? `
+                    <div class="product-badge badge-new" style="top: ${product.discount > 0 ? '50px' : '12px'}">
+                        NEW
+                    </div>
+                ` : ''}
+                
+                <!-- OUT OF STOCK BADGE REMOVED - ALL PRODUCTS AVAILABLE -->
+                
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                        <span class="${wishlist.includes(product.id) ? 'text-red-500' : ''}">❤️</span>
+                    </button>
+                    <button class="quick-btn" onclick="event.stopPropagation(); addToCart(${product.id})">
+                        🛒
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                
+                <p class="product-description">${product.description.substring(0, 150)}...</p>
+                
+                <!-- View Description Button -->
+                <button class="view-description-btn" onclick="event.stopPropagation(); openDescriptionModal(${product.id})">
+                    📖 View Full Description
+                </button>
+                
+                <div class="product-meta">
+                    <div class="rating">
+                        ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
+                        <span class="rating-count">${product.rating}</span>
+                    </div>
+                    <span>•</span>
+                    <span>${product.reviews} reviews</span>
+                </div>
+                
+                <div class="price-container">
+                    <div>
+                        <span class="current-price">₨ ${product.price.toLocaleString()}</span>
+                        ${product.discount > 0 ? `
+                            <span class="original-price">₨ ${product.originalPrice.toLocaleString()}</span>
+                            <span class="discount-percent">Save ${product.discount}%</span>
+                        ` : ''}
+                    </div>
+                    
+                    <button class="add-to-cart-btn" 
+                            onclick="event.stopPropagation(); addToCart(${product.id})">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ==============================
+// PRODUCT DESCRIPTION MODAL FUNCTIONS
+// ==============================
+
+function openDescriptionModal(productId) {
+    const product = allProducts.find(p => p.id === productId);
+    
+    if (!product) {
+        showToast('Product not found!', 'error');
+        return;
+    }
+    
+    // Set modal content
+    document.getElementById('descriptionProductTitle').textContent = product.name;
+    document.getElementById('descriptionProductCategory').textContent = `Category: ${product.category.charAt(0).toUpperCase() + product.category.slice(1)}`;
+    document.getElementById('descriptionText').innerHTML = `
+        <div class="space-y-4">
+            <div class="bg-gradient-to-r from-primary/5 to-accent/5 p-4 rounded-xl">
+                <h4 class="font-bold text-lg mb-2">Product Details</h4>
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Price:</span>
+                        <span class="text-primary font-bold">₨ ${product.price.toLocaleString()}</span>
+                        ${product.discount > 0 ? `
+                            <span class="text-error text-xs">(${product.discount}% OFF)</span>
+                        ` : ''}
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Color:</span>
+                        <span>${product.color}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Size:</span>
+                        <span>${product.size}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Material:</span>
+                        <span>${product.material}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Rating:</span>
+                        <span class="flex items-center">
+                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
+                            <span class="ml-1">(${product.reviews} reviews)</span>
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium">Availability:</span>
+                        <span class="text-success font-medium">
+                            In Stock
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-2">Full Description</h4>
+                <div class="text-gray-700 whitespace-pre-line">
+                    ${product.description}
+                </div>
+            </div>
+            
+            ${product.discount > 0 ? `
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">🎁</div>
+                        <div>
+                            <h5 class="font-bold text-green-800">Special Offer!</h5>
+                            <p class="text-green-700 text-sm">Save ${product.discount}% on this product. Original price: ₨ ${product.originalPrice.toLocaleString()}</p>
+                        </div>
+                    </div>
+                </div>
+            ` : ''}
+            
+            ${product.isNew ? `
+                <div class="bg-gradient-to-r from-blue-50 to-primary/10 p-4 rounded-xl border border-blue-200">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">🆕</div>
+                        <div>
+                            <h5 class="font-bold text-primary">New Arrival</h5>
+                            <p class="text-primary/80 text-sm">This is a newly added product in our collection</p>
+                        </div>
+                    </div>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Show modal
+    document.getElementById('descriptionModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDescriptionModal() {
+    document.getElementById('descriptionModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==============================
+// FILTER FUNCTIONS
+// ==============================
+
+function filterProducts(category) {
+    currentFilter = category;
+    currentPage = 0;
+    displayedProducts = [];
+    
+    // Update active filter chip
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Update category badges
+    document.querySelectorAll('.category-badge').forEach(badge => {
+        badge.classList.remove('active');
+        if (badge.textContent.includes(category.charAt(0).toUpperCase() + category.slice(1)) || 
+            (category === 'all' && badge.textContent.includes('All'))) {
+            badge.classList.add('active');
+        }
+    });
+    
+    // Hide indicators
+    document.getElementById('endOfResults').classList.add('hidden');
+    document.getElementById('noResults').classList.add('hidden');
+    
+    // Load products
+    loadMoreProducts();
+    
+    // Scroll to top
+    document.getElementById('appContent').scrollTop = 0;
+}
+
+function toggleView() {
+    const toggleBtn = document.getElementById('viewToggle');
+    const grid = document.getElementById('productsGrid');
+    
+    if (currentView === 'grid') {
+        currentView = 'list';
+        toggleBtn.textContent = '⏹';
+        grid.classList.remove('grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4', 'xl:grid-cols-5');
+        grid.classList.add('grid-cols-1', 'max-w-2xl', 'mx-auto');
+    } else {
+        currentView = 'grid';
+        toggleBtn.textContent = '⛶';
+        grid.classList.remove('grid-cols-1', 'max-w-2xl', 'mx-auto');
+        grid.classList.add('grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4', 'xl:grid-cols-5');
+    }
+    
+    renderCollectionProducts();
+}
+
+// ==============================
+// CART FUNCTIONS
+// ==============================
+
+function addToCart(productId) {
+    const product = allProducts.find(p => p.id === productId);
+    
+    // REMOVED STOCK CHECK - ALL PRODUCTS ALWAYS AVAILABLE
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            discount: product.discount,
+            image: product.images[0],
+            quantity: 1,
+            inStock: true // ALL PRODUCTS IN STOCK
+        });
+    }
+    
+    updateCartUI();
+    showToast('Added to cart! 🛒', 'success');
+    saveCart();
+    
+    // Animate cart badge
+    animateCartBadge();
+}
+
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = 200;
+    const total = subtotal + shipping;
+    
+    // Update cart badge
+    const cartBadge = document.getElementById('cartBadge');
+    if (totalItems > 0) {
+        cartBadge.textContent = totalItems > 99 ? '99+' : totalItems;
+        cartBadge.classList.remove('hidden');
+    } else {
+        cartBadge.classList.add('hidden');
+    }
+    
+    // Update sidebar cart count
+    document.getElementById('sidebarCartCount').textContent = `${totalItems} items`;
+    
+    // Update cart count text
+    document.getElementById('cartCountText').textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'} in cart`;
+    
+    // Update cart subtotal and total
+    document.getElementById('cartSubtotal').textContent = subtotal.toLocaleString();
+    document.getElementById('cartTotal').textContent = total.toLocaleString();
+    
+    // Render cart items
+    const cartItems = document.getElementById('cartItems');
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">🛒</div>
+                <div class="empty-state-title">Your cart is empty</div>
+                <div class="empty-state-text">Add some amazing products to get started!</div>
+                <button onclick="continueShopping()" class="btn btn-primary mt-4">
+                    Start Shopping
+                </button>
+            </div>
+        `;
+    } else {
+        cartItems.innerHTML = cart.map((item, index) => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" 
+                     class="w-20 h-20 object-cover rounded-xl flex-shrink-0">
+                
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-semibold text-sm line-clamp-2 flex-1">${item.name}</h4>
+                        <button onclick="removeFromCart(${item.id})" 
+                                class="text-gray-400 hover:text-error ml-2">
+                            <span class="text-lg">×</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, -1)">−</button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        
+                        <div class="text-right">
+                            <p class="font-bold text-primary">
+                                ₨ ${(item.price * item.quantity).toLocaleString()}
+                            </p>
+                            ${item.discount > 0 ? `
+                                <p class="text-xs text-gray-500 line-through">
+                                    ₨ ${(item.originalPrice * item.quantity).toLocaleString()}
+                                </p>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function updateCartQuantity(productId, change) {
+    const item = cart.find(item => item.id === productId);
+    if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            cart = cart.filter(item => item.id !== productId);
+            showToast('Item removed from cart', 'info');
+        }
+        updateCartUI();
+        saveCart();
+    }
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartUI();
+    saveCart();
+    showToast('Item removed from cart', 'info');
+}
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function animateCartBadge() {
+    const badge = document.getElementById('cartBadge');
+    badge.classList.add('animate-bounce');
+    setTimeout(() => badge.classList.remove('animate-bounce'), 1000);
+}
+
+// ==============================
+// WISHLIST FUNCTIONS
+// ==============================
+
+function toggleWishlist(productId) {
+    const index = wishlist.indexOf(productId);
+    if (index === -1) {
+        wishlist.push(productId);
+        showToast('Added to wishlist! ❤️', 'success');
+    } else {
+        wishlist.splice(index, 1);
+        showToast('Removed from wishlist', 'info');
+    }
+    
+    updateWishlistUI();
+    saveWishlist();
+    renderCollectionProducts();
+    loadHomeProducts();
+}
+
+function updateWishlistUI() {
+    const wishlistCount = wishlist.length;
+    const wishlistBadge = document.getElementById('wishlistBadge');
+    
+    if (wishlistCount > 0) {
+        wishlistBadge.textContent = wishlistCount > 99 ? '99+' : wishlistCount;
+        wishlistBadge.classList.remove('hidden');
+    } else {
+        wishlistBadge.classList.add('hidden');
+    }
+    
+    document.getElementById('sidebarWishlistCount').textContent = `${wishlistCount} items`;
+    document.getElementById('wishlistCountText').textContent = `${wishlistCount} ${wishlistCount === 1 ? 'item' : 'items'} saved`;
+    
+    // Render wishlist items
+    const wishlistItems = document.getElementById('wishlistItems');
+    const wishlistProducts = allProducts.filter(p => wishlist.includes(p.id));
+    
+    if (wishlistProducts.length === 0) {
+        wishlistItems.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">❤️</div>
+                <div class="empty-state-title">Your wishlist is empty</div>
+                <div class="empty-state-text">Save your favorite items here!</div>
+                <button onclick="closeWishlistModal(); switchSection('collection');" class="btn btn-primary mt-4">
+                    Browse Products
+                </button>
+            </div>
+        `;
+    } else {
+        wishlistItems.innerHTML = wishlistProducts.map(product => `
+            <div class="cart-item">
+                <img src="${product.images[0]}" alt="${product.name}" 
+                     class="w-20 h-20 object-cover rounded-xl flex-shrink-0">
+                
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-sm line-clamp-2">${product.name}</h4>
+                            <p class="text-xs text-gray-500 mt-1">${product.category} • ${product.color}</p>
+                        </div>
+                        <button onclick="toggleWishlist(${product.id})" 
+                                class="text-red-500 hover:text-red-600 ml-2">
+                            <span class="text-xl">❤️</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="font-bold text-primary">
+                            ₨ ${product.price.toLocaleString()}
+                            ${product.discount > 0 ? `
+                                <span class="text-xs text-gray-500 line-through ml-2">
+                                    ₨ ${product.originalPrice.toLocaleString()}
+                                </span>
+                            ` : ''}
+                        </div>
+                        
+                        <button onclick="addToCart(${product.id})" 
+                                class="add-to-cart-btn px-3 py-1.5 text-sm">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function saveWishlist() {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+}
+
+// ==============================
+// SEARCH FUNCTIONS
+// ==============================
+
+function searchProducts(query) {
+    if (query.length < 2) return;
+    
+    addToSearchHistory(query);
+    
+    const results = allProducts.filter(product => 
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.category.toLowerCase().includes(query.toLowerCase()) ||
+        product.color.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    if (results.length > 0) {
+        displayedProducts = results.slice(0, PRODUCTS_PER_PAGE);
+        currentPage = 1;
+        renderCollectionProducts();
+        document.getElementById('noResults').classList.add('hidden');
+        document.getElementById('endOfResults').classList.add('hidden');
+    } else {
+        displayedProducts = [];
+        document.getElementById('productsGrid').innerHTML = '';
+        document.getElementById('noResults').classList.remove('hidden');
+        document.getElementById('endOfResults').classList.add('hidden');
+    }
+}
+
+function addToSearchHistory(query) {
+    if (!query.trim()) return;
+    
+    query = query.trim().toLowerCase();
+    
+    // Remove if already exists
+    searchHistory = searchHistory.filter(term => term.toLowerCase() !== query);
+    
+    // Add to beginning
+    searchHistory.unshift(query);
+    
+    // Keep only last 5 searches
+    if (searchHistory.length > 5) {
+        searchHistory.pop();
+    }
+    
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    updateSearchHistory();
+}
+
+function updateSearchHistory() {
+    const recentSearches = document.getElementById('recentSearches');
+    const searchHistorySection = document.getElementById('searchHistorySection');
+    
+    if (searchHistory.length === 0) {
+        searchHistorySection.classList.add('hidden');
+        return;
+    }
+    
+    searchHistorySection.classList.remove('hidden');
+    recentSearches.innerHTML = searchHistory.map(term => `
+        <button onclick="performSearch('${term}')" 
+                class="filter-chip">
+            ${term}
+        </button>
+    `).join('');
+}
+
+function performSearch(term) {
+    document.getElementById('searchInput').value = term;
+    searchProducts(term);
+    closeSearchModal();
+}
+
+function clearSearchAndFilters() {
+    currentFilter = 'all';
+    document.getElementById('searchInput').value = '';
+    loadCollectionProducts();
+    
+    // Reset filter chips
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.classList.remove('active');
+        if (chip.textContent.includes('All')) {
+            chip.classList.add('active');
+        }
+    });
+}
+
+// ==============================
+// GEOGRAPHICAL FUNCTIONS (COMPLETE)
+// ==============================
+
+function handleCountryChange() {
+    const country = document.getElementById('country').value;
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+    const tehsilSelect = document.getElementById('tehsil');
+    
+    if (country === 'Pakistan') {
+        // Populate provinces
+        provinceSelect.innerHTML = '<option value="">Select Province</option>';
+        Object.keys(pakistanData.provinces).forEach(province => {
+            const option = document.createElement('option');
+            option.value = province;
+            option.textContent = province;
+            provinceSelect.appendChild(option);
+        });
+        provinceSelect.disabled = false;
+        
+        // Clear and disable district and tehsil
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+        districtSelect.disabled = true;
+        tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
+        tehsilSelect.disabled = true;
+    } else {
+        // For other countries
+        provinceSelect.innerHTML = '<option value="">Select State/Region</option>';
+        districtSelect.innerHTML = '<option value="">Select City</option>';
+        tehsilSelect.innerHTML = '<option value="">Select Area</option>';
+        provinceSelect.disabled = false;
+        districtSelect.disabled = false;
+        tehsilSelect.disabled = false;
+    }
+}
+
+function updateDistricts() {
+    const province = document.getElementById('province').value;
+    const districtSelect = document.getElementById('district');
+    const tehsilSelect = document.getElementById('tehsil');
+    
+    districtSelect.innerHTML = '<option value="">Select District</option>';
+    tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
+    tehsilSelect.disabled = true;
+    
+    if (province && pakistanData.provinces[province]) {
+        districtSelect.disabled = false;
+        
+        pakistanData.provinces[province].forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+        });
+    } else if (province) {
+        districtSelect.disabled = false;
+        districtSelect.innerHTML = '<option value="">Select City</option>';
+    } else {
+        districtSelect.disabled = true;
+    }
+}
+
+function updateTehsils() {
+    const district = document.getElementById('district').value;
+    const tehsilSelect = document.getElementById('tehsil');
+    
+    tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
+    
+    if (district && pakistanData.tehsils[district]) {
+        tehsilSelect.disabled = false;
+        
+        pakistanData.tehsils[district].forEach(tehsil => {
+            const option = document.createElement('option');
+            option.value = tehsil;
+            option.textContent = tehsil;
+            tehsilSelect.appendChild(option);
+        });
+        
+        // Add "Other" option
+        const otherOption = document.createElement('option');
+        otherOption.value = "Other";
+        otherOption.textContent = "Other (Please specify in address)";
+        tehsilSelect.appendChild(otherOption);
+    } else if (district) {
+        tehsilSelect.disabled = false;
+        
+        const generalOptions = ["Main City", "Cantonment Area", "Urban Area", "Rural Area", "Suburbs", "Downtown"];
+        generalOptions.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            tehsilSelect.appendChild(opt);
+        });
+        
+        const otherOption = document.createElement('option');
+        otherOption.value = "Other";
+        otherOption.textContent = "Other (Please specify in address)";
+        tehsilSelect.appendChild(otherOption);
+    } else {
+        tehsilSelect.disabled = true;
+    }
+}
+
+// ==============================
+// CHECKOUT FUNCTIONS (COMPLETE)
+// ==============================
+
+function renderCheckoutForm() {
+    const checkoutForm = document.getElementById('checkoutForm');
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = 200;
+    const total = subtotal + shipping;
+    
+    checkoutForm.innerHTML = `
+        <div class="space-y-6">
+            <!-- Contact Information -->
+            <div>
+                <h4 class="font-semibold text-lg mb-4">Contact Information</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" id="checkoutFirstName" required class="form-control" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" id="checkoutLastName" required class="form-control" placeholder="Doe">
+                    </div>
+                </div>
+                <div class="form-group mt-4">
+                    <label class="form-label">Mobile Number *</label>
+                    <input type="tel" id="checkoutMobile" required class="form-control" placeholder="03XX XXXXXXX" pattern="[0-9]{11}">
+                    <p class="text-xs text-gray-500 mt-1">Format: 03XXXXXXXXX</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="checkoutEmail" class="form-control" placeholder="email@example.com">
+                </div>
+            </div>
+            
+            <!-- Shipping Address -->
+            <div>
+                <h4 class="font-semibold text-lg mb-4">Shipping Address</h4>
+                <div class="form-group">
+                    <label class="form-label">Country *</label>
+                    <select id="checkoutCountry" required class="form-control form-select" onchange="handleCheckoutCountryChange()">
+                        <option value="Pakistan" selected>Pakistan</option>
+                        <option value="Other">Other Country</option>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Province *</label>
+                        <select id="checkoutProvince" required class="form-control form-select" onchange="updateCheckoutDistricts()">
+                            <option value="">Select Province</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Sindh">Sindh</option>
+                            <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                            <option value="Balochistan">Balochistan</option>
+                            <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
+                            <option value="Azad Jammu & Kashmir">Azad Jammu & Kashmir</option>
+                            <option value="Islamabad Capital Territory">Islamabad Capital Territory</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">District *</label>
+                        <select id="checkoutDistrict" required class="form-control form-select" onchange="updateCheckoutTehsils()">
+                            <option value="">Select District</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Tehsil *</label>
+                        <select id="checkoutTehsil" required class="form-control form-select">
+                            <option value="">Select Tehsil</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ZIP Code (Optional)</label>
+                        <input type="text" id="checkoutZip" class="form-control" placeholder="Optional">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Address *</label>
+                    <textarea id="checkoutAddress" required rows="3" class="form-control" placeholder="House No, Street, Area, Landmark"></textarea>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div>
+                <h4 class="font-semibold text-lg mb-4">Order Summary</h4>
+                <div class="bg-gray-50 rounded-2xl p-4">
+                    <div class="space-y-3">
+                        ${cart.map((item, index) => `
+                            <div class="flex justify-between items-center py-2 ${index !== cart.length - 1 ? 'border-b border-gray-200' : ''}">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm">${item.name}</p>
+                                    <p class="text-xs text-gray-500">Qty: ${item.quantity} × ₨${item.price.toLocaleString()}</p>
+                                </div>
+                                <p class="font-semibold text-sm">₨ ${(item.price * item.quantity).toLocaleString()}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="border-t mt-4 pt-4 space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Subtotal:</span>
+                            <span class="font-medium">₨ ${subtotal.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Shipping:</span>
+                            <span class="font-medium">₨ ${shipping}</span>
+                        </div>
+                        <div class="border-t pt-2 flex justify-between">
+                            <span class="font-semibold text-lg">Total:</span>
+                            <span class="font-bold text-xl text-primary">₨ ${total.toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Method -->
+            <div>
+                <h4 class="font-semibold text-lg mb-4">Payment Method</h4>
+                <div class="space-y-3">
+                    <label class="flex items-center p-4 border-2 border-primary rounded-2xl cursor-pointer bg-primary/5">
+                        <input type="radio" name="paymentMethod" value="cod" checked class="h-5 w-5 text-primary">
+                        <div class="ml-3 flex-1">
+                            <span class="block font-medium">Cash on Delivery</span>
+                            <span class="block text-sm text-gray-500 mt-1">Pay when you receive your order</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="pt-4">
+                <button type="button" onclick="submitCheckout()" class="btn btn-success">
+                    <span>Place Order & Send via WhatsApp</span>
+                    <span>📱</span>
+                </button>
+                <p class="text-center text-gray-500 text-sm mt-3">
+                    Your order will be sent to our WhatsApp for confirmation
+                </p>
+            </div>
+        </div>
+    `;
+    
+    // Initialize country selection
+    handleCheckoutCountryChange();
+}
+
+function handleCheckoutCountryChange() {
+    const country = document.getElementById('checkoutCountry').value;
+    const provinceSelect = document.getElementById('checkoutProvince');
+    
+    if (country === 'Pakistan') {
+        provinceSelect.disabled = false;
+        updateCheckoutDistricts();
+    } else {
+        provinceSelect.disabled = true;
+        document.getElementById('checkoutDistrict').innerHTML = '<option value="">Select City</option>';
+        document.getElementById('checkoutTehsil').innerHTML = '<option value="">Select Area</option>';
+        document.getElementById('checkoutDistrict').disabled = false;
+        document.getElementById('checkoutTehsil').disabled = false;
+    }
+}
+
+function updateCheckoutDistricts() {
+    const province = document.getElementById('checkoutProvince').value;
+    const districtSelect = document.getElementById('checkoutDistrict');
+    
+    districtSelect.innerHTML = '<option value="">Select District</option>';
+    
+    if (province && pakistanData.provinces[province]) {
+        districtSelect.disabled = false;
+        
+        pakistanData.provinces[province].forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+        });
+    } else if (province) {
+        districtSelect.disabled = false;
+        districtSelect.innerHTML = '<option value="">Select City</option>';
+    } else {
+        districtSelect.disabled = true;
+    }
+    
+    document.getElementById('checkoutTehsil').innerHTML = '<option value="">Select Tehsil</option>';
+    document.getElementById('checkoutTehsil').disabled = true;
+}
+
+function updateCheckoutTehsils() {
+    const district = document.getElementById('checkoutDistrict').value;
+    const tehsilSelect = document.getElementById('checkoutTehsil');
+    
+    tehsilSelect.innerHTML = '<option value="">Select Tehsil</option>';
+    
+    if (district && pakistanData.tehsils[district]) {
+        tehsilSelect.disabled = false;
+        
+        pakistanData.tehsils[district].forEach(tehsil => {
+            const option = document.createElement('option');
+            option.value = tehsil;
+            option.textContent = tehsil;
+            tehsilSelect.appendChild(option);
+        });
+        
+        // Add "Other" option
+        const otherOption = document.createElement('option');
+        otherOption.value = "Other";
+        otherOption.textContent = "Other (Please specify in address)";
+        tehsilSelect.appendChild(otherOption);
+    } else if (district) {
+        tehsilSelect.disabled = false;
+        
+        const generalOptions = ["Main City", "Cantonment Area", "Urban Area", "Rural Area", "Suburbs", "Downtown"];
+        generalOptions.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            tehsilSelect.appendChild(opt);
+        });
+        
+        const otherOption = document.createElement('option');
+        otherOption.value = "Other";
+        otherOption.textContent = "Other (Please specify in address)";
+        tehsilSelect.appendChild(otherOption);
+    } else {
+        tehsilSelect.disabled = true;
+    }
+}
+
+function submitCheckout() {
+    // Get form values
+    const firstName = document.getElementById('checkoutFirstName').value.trim();
+    const lastName = document.getElementById('checkoutLastName').value.trim();
+    const mobile = document.getElementById('checkoutMobile').value.trim();
+    const email = document.getElementById('checkoutEmail').value.trim();
+    const country = document.getElementById('checkoutCountry').value;
+    const province = document.getElementById('checkoutProvince').value;
+    const district = document.getElementById('checkoutDistrict').value;
+    const tehsil = document.getElementById('checkoutTehsil').value;
+    const address = document.getElementById('checkoutAddress').value.trim();
+    const zip = document.getElementById('checkoutZip').value.trim();
+    
+    // Validation
+    if (!firstName || !lastName || !mobile || !country || !province || !district || !tehsil || !address) {
+        showToast('Please fill in all required fields!', 'error');
+        return;
+    }
+    
+    if (!/^03\d{9}$/.test(mobile)) {
+        showToast('Please enter a valid Pakistani mobile number (03XXXXXXXXX)', 'error');
+        return;
+    }
+    
+    if (cart.length === 0) {
+        showToast('Your cart is empty!', 'error');
+        return;
+    }
+    
+    // Calculate totals
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = 200;
+    const total = subtotal + shipping;
+    const orderNumber = 'BAS-' + Date.now().toString().slice(-8);
+    
+    // Create WhatsApp message
+    let message = `🛍️ *NEW ORDER - Basim Store* 🛍️\n\n`;
+    message += `📋 *Order #:* ${orderNumber}\n`;
+    message += `📅 *Date:* ${new Date().toLocaleDateString('en-PK')}\n`;
+    message += `⏰ *Time:* ${new Date().toLocaleTimeString('en-PK', {hour: '2-digit', minute:'2-digit'})}\n\n`;
+    
+    message += `👤 *Customer Details*\n`;
+    message += `Name: ${firstName} ${lastName}\n`;
+    message += `Mobile: ${mobile}\n`;
+    if (email) message += `Email: ${email}\n`;
+    
+    message += `\n📍 *Shipping Address*\n`;
+    message += `${address}\n`;
+    if (country === 'Pakistan') {
+        message += `${tehsil}, ${district}, ${province}\n`;
+    }
+    if (zip) message += `ZIP: ${zip}\n`;
+    message += `Country: ${country}\n\n`;
+    
+    message += `🛒 *Order Items*\n`;
+    cart.forEach((item, index) => {
+        message += `${index + 1}. ${item.name}\n`;
+        message += `   Qty: ${item.quantity} | Price: ₨${item.price.toLocaleString()}\n`;
+        if (item.discount > 0) {
+            message += `   Discount: ${item.discount}% (Save ₨${(item.originalPrice - item.price).toLocaleString()})\n`;
+        }
+        message += `   Total: ₨${(item.price * item.quantity).toLocaleString()}\n`;
+    });
+    
+    message += `\n💰 *Order Summary*\n`;
+    message += `Subtotal: ₨${subtotal.toLocaleString()}\n`;
+    message += `Shipping: ₨${shipping.toLocaleString()}\n`;
+    message += `*TOTAL: ₨${total.toLocaleString()}*\n\n`;
+    message += `💳 *Payment Method:* Cash on Delivery\n\n`;
+    message += `✅ *Please confirm this order!*`;
+    
+    // Encode message for WhatsApp
+    const phoneNumber = "923347382564";
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    // Show loading
+    showLoading();
+    
+    setTimeout(() => {
+        hideLoading();
+        
+        // Open WhatsApp
+        window.open(whatsappLink, '_blank');
+        
+        // Clear cart
+        cart = [];
+        updateCartUI();
+        saveCart();
+        
+        // Reset form
+        document.getElementById('checkoutForm').reset();
+        
+        // Close modal
+        closeCheckoutModal();
+        
+        // Show success
+        showToast('Order sent to WhatsApp! Please send the message.', 'success');
+        
+        // Save order to localStorage
+        const order = {
+            orderNumber,
+            customer: {firstName, lastName, mobile, email},
+            address: {country, province, district, tehsil, address, zip},
+            items: cart.map(item => ({
+                name: item.name,
+                quantity: item.quantity,
+                price: item.price,
+                discount: item.discount
+            })),
+            total,
+            date: new Date().toISOString()
+        };
+        
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        
+    }, 1500);
+}
+
+// ==============================
+// FULLSCREEN IMAGE VIEWER
+// ==============================
+
+let currentViewerImages = [];
+let currentViewerIndex = 0;
+
+function openFullscreenViewer(imageUrl, productId, imageIndex = 0) {
+    const product = allProducts.find(p => p.id === productId);
+    
+    if (product) {
+        currentViewerImages = product.images;
+        currentViewerIndex = imageIndex;
+        
+        updateFullscreenViewer();
+        document.getElementById('fullscreenViewer').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function updateFullscreenViewer() {
+    if (currentViewerImages.length > 0) {
+        document.getElementById('fullscreenImage').src = currentViewerImages[currentViewerIndex];
+        document.getElementById('fullscreenCounter').textContent = 
+            `${currentViewerIndex + 1}/${currentViewerImages.length}`;
+    }
+}
+
+function nextFullscreenImage() {
+    if (currentViewerImages.length > 0) {
+        currentViewerIndex = (currentViewerIndex + 1) % currentViewerImages.length;
+        updateFullscreenViewer();
+    }
+}
+
+function prevFullscreenImage() {
+    if (currentViewerImages.length > 0) {
+        currentViewerIndex = (currentViewerIndex - 1 + currentViewerImages.length) % currentViewerImages.length;
+        updateFullscreenViewer();
+    }
+}
+
+function closeFullscreenViewer() {
+    document.getElementById('fullscreenViewer').classList.remove('active');
+    document.body.style.overflow = '';
+    currentViewerImages = [];
+    currentViewerIndex = 0;
+}
+
+// ==============================
+// SOCIAL MEDIA FUNCTIONS
+// ==============================
+
+function openSocialMediaModal() {
+    document.getElementById('socialMediaModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSocialMediaModal() {
+    document.getElementById('socialMediaModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==============================
+// MODAL FUNCTIONS
+// ==============================
+
+function openSidebar() {
+    document.getElementById('sidebar').style.transform = 'translateX(0)';
+    document.getElementById('sidebarOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    document.getElementById('sidebar').style.transform = 'translateX(-100%)';
+    document.getElementById('sidebarOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function openCartModal() {
+    document.getElementById('cartModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCartModal() {
+    document.getElementById('cartModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function openWishlist() {
+    updateWishlistUI();
+    document.getElementById('wishlistModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeWishlistModal() {
+    document.getElementById('wishlistModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function openCheckoutModal() {
+    if (cart.length === 0) {
+        showToast('Your cart is empty! Add some products first.', 'warning');
+        return;
+    }
+    
+    closeCartModal();
+    renderCheckoutForm();
+    document.getElementById('checkoutModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCheckoutModal() {
+    document.getElementById('checkoutModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function openSearch() {
+    document.getElementById('searchModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('searchInput').focus();
+}
+
+function closeSearchModal() {
+    document.getElementById('searchModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('searchResults').innerHTML = '';
+    document.getElementById('clearSearchBtn').classList.add('hidden');
+}
+
+function clearSearchInput() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchResults').innerHTML = '';
+    document.getElementById('clearSearchBtn').classList.add('hidden');
+    updateSearchHistory();
+}
+
+function openCategoriesModal() {
+    document.getElementById('categoriesModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCategoriesModal() {
+    document.getElementById('categoriesModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function openFiltersModal() {
+    document.getElementById('filtersModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFiltersModal() {
+    document.getElementById('filtersModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function applyFilters() {
+    const maxPrice = document.getElementById('priceRange').value;
+    const sortBy = document.querySelector('input[name="sort"]:checked').value;
+    
+    // Apply filters and sort
+    let filtered = allProducts;
+    
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(p => p.category === currentFilter);
+    }
+    
+    filtered = filtered.filter(p => p.price <= maxPrice);
+    
+    switch(sortBy) {
+        case 'newest':
+            filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            break;
+        case 'price-low':
+            filtered.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-high':
+            filtered.sort((a, b) => b.price - a.price);
+            break;
+        case 'popular':
+            filtered.sort((a, b) => b.rating - a.rating);
+            break;
+    }
+    
+    displayedProducts = filtered.slice(0, PRODUCTS_PER_PAGE);
+    currentPage = 1;
+    renderCollectionProducts();
+    
+    closeFiltersModal();
+    showToast('Filters applied successfully!', 'success');
+}
+
+function resetFilters() {
+    document.getElementById('priceRange').value = 10000;
+    document.querySelector('input[value="popular"]').checked = true;
+    showToast('Filters reset', 'info');
+}
+
+// ==============================
+// SECTION MANAGEMENT
+// ==============================
+
+function switchSection(section) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.section-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    if (section === 'home') {
+        document.querySelectorAll('.nav-item')[0].classList.add('active');
+        document.getElementById('homeContent').classList.add('active');
+        currentSection = 'home';
+    } else if (section === 'collection') {
+        document.querySelectorAll('.nav-item')[1].classList.add('active');
+        document.getElementById('collectionContent').classList.add('active');
+        currentSection = 'collection';
+    }
+    
+    document.getElementById('appContent').scrollTop = 0;
+}
+
+function continueShopping() {
+    closeCartModal();
+    switchSection('collection');
+}
+
+// ==============================
+// UTILITY FUNCTIONS
+// ==============================
+
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
+    
+    toast.className = `toast toast-${type} animate-fade-in`;
+    toast.innerHTML = `
+        <span class="text-lg">${icons[type] || icons.info}</span>
+        <span class="flex-1 text-sm">${message}</span>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('animate-fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function showLoading() {
+    document.getElementById('loadingOverlay').classList.remove('hidden');
+}
+
+function hideLoading() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+function openOrders() {
+    showToast('Order history coming soon!', 'info');
+}
+
+function openAccount() {
+    showToast('Account management coming soon!', 'info');
+}
+
+function openSettings() {
+    showToast('Settings coming soon!', 'info');
+}
+
+function showHelp() {
+    // Show social media modal instead of help
+    openSocialMediaModal();
+}
+
+function showAbout() {
+    showToast('Basim Store v2.0 - Premium Fashion Collection', 'info');
+}
+
+// ==============================
+// EVENT LISTENERS
+// ==============================
+
+function setupEventListeners() {
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (document.getElementById('fullscreenViewer').classList.contains('active')) {
+                closeFullscreenViewer();
+            } else if (document.getElementById('descriptionModal').classList.contains('active')) {
+                closeDescriptionModal();
+            } else if (document.getElementById('cartModal').classList.contains('active')) {
+                closeCartModal();
+            } else if (document.getElementById('checkoutModal').classList.contains('active')) {
+                closeCheckoutModal();
+            } else if (document.getElementById('searchModal').classList.contains('active')) {
+                closeSearchModal();
+            } else if (document.getElementById('socialMediaModal').classList.contains('active')) {
+                closeSocialMediaModal();
+            }
+        }
+        
+        // Image viewer navigation
+        if (document.getElementById('fullscreenViewer').classList.contains('active')) {
+            if (e.key === 'ArrowLeft') prevFullscreenImage();
+            if (e.key === 'ArrowRight') nextFullscreenImage();
+        }
+    });
+    
+    // Touch gestures for image viewer
+    let touchStartX = 0;
+    document.getElementById('fullscreenViewer').addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+    
+    document.getElementById('fullscreenViewer').addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextFullscreenImage();
+            else prevFullscreenImage();
+        }
+    });
+    
+    // Modal overlay clicks
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Search input
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    
+    searchInput.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        if (query.length > 0) {
+            clearSearchBtn.classList.remove('hidden');
+            
+            // Search in real-time
+            const results = allProducts.filter(product => 
+                product.name.toLowerCase().includes(query.toLowerCase())
+            ).slice(0, 10);
+            
+            const resultsContainer = document.getElementById('searchResults');
+            if (results.length > 0) {
+                resultsContainer.innerHTML = results.map(product => `
+                    <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100 cursor-pointer mb-2"
+                         onclick="closeSearchModal(); openFullscreenViewer('${product.images[0]}', ${product.id})">
+                        <img src="${product.images[0]}" alt="${product.name}" 
+                             class="w-16 h-16 object-cover rounded-xl">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm line-clamp-2">${product.name}</h4>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-primary font-bold">
+                                    ₨ ${product.price.toLocaleString()}
+                                </span>
+                                ${product.discount > 0 ? `
+                                    <span class="text-xs text-error font-medium">
+                                        ${product.discount}% OFF
+                                    </span>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state py-8">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-title">No results found</div>
+                        <div class="empty-state-text">Try different keywords</div>
+                    </div>
+                `;
+            }
+        } else {
+            clearSearchBtn.classList.add('hidden');
+            document.getElementById('searchResults').innerHTML = '';
+        }
+    });
+    
+    // Search on enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const query = e.target.value.trim();
+            if (query.length > 0) {
+                addToSearchHistory(query);
+                searchProducts(query);
+                closeSearchModal();
+            }
+        }
+    });
+    
+    // Price range display
+    const priceRange = document.getElementById('priceRange');
+    if (priceRange) {
+        priceRange.addEventListener('input', function() {
+            document.getElementById('maxPriceValue').textContent = `₨ ${parseInt(this.value).toLocaleString()}`;
+        });
+    }
+}
+
+function setupInfiniteScroll() {
+    const appContent = document.getElementById('appContent');
+    let isLoading = false;
+    
+    appContent.addEventListener('scroll', function() {
+        if (currentSection !== 'collection') return;
+        if (isLoading) return;
+        
+        const scrollTop = appContent.scrollTop;
+        const scrollHeight = appContent.scrollHeight;
+        const clientHeight = appContent.clientHeight;
+        
+        if (scrollTop + clientHeight >= scrollHeight - 200) {
+            isLoading = true;
+            loadMoreProducts();
+            setTimeout(() => isLoading = false, 1000);
+        }
+    });
+}
+
+// ==============================
+// PERFORMANCE OPTIMIZATION
+// ==============================
+
+// Lazy load images
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                }
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    // Observe all product images
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.product-image').forEach(img => {
+            if (img.getAttribute('loading') === 'lazy') {
+                imageObserver.observe(img);
+            }
+        });
+    });
+}
+
+// Debounce search
+let searchTimeout;
+function debounceSearch(query) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => searchProducts(query), 300);
+}
+
+// Initialize the app
+window.addEventListener('load', initializeApp);
+</script>
+</body>
+</html>
