@@ -418,26 +418,9 @@
             display: none; /* Description now only in modal */
         }
         
+        /* Product Meta - REMOVED RATING SECTION */
         .product-meta {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 8px;
-            font-size: 10px;
-            color: var(--text-secondary);
-        }
-        
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            color: #ffb300;
-            font-size: 10px;
-        }
-        
-        .rating-count {
-            color: var(--text-secondary);
-            font-weight: 500;
+            display: none; /* Rating section completely removed */
         }
         
         /* NEW: Combined buttons container */
@@ -2639,10 +2622,6 @@ const generateProducts = () => {
         const discount = Math.random() > 0.7 ? Math.floor(Math.random() * 40) + 10 : 0;
         const finalPrice = discount > 0 ? Math.floor(basePrice * (1 - discount/100)) : basePrice;
         
-        // Rating calculation
-        const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
-        const reviews = Math.floor(Math.random() * 200) + 10;
-        
         // Product name
         const productNames = {
             'shirt': ['Formal Shirt', 'Casual T-Shirt', 'Polo Shirt', 'Designer Shirt', 'Linen Shirt'],
@@ -2669,8 +2648,6 @@ const generateProducts = () => {
             size: size,
             material: material,
             images: images,
-            rating: parseFloat(rating),
-            reviews: reviews,
             description: FULL_PRODUCT_DESCRIPTION, // Full description for every product
             inStock: true, // ALL PRODUCTS ALWAYS IN STOCK
             isFeatured: i <= 40,
@@ -2836,14 +2813,7 @@ function createProductCard(product) {
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
                 
-                <div class="product-meta">
-                    <div class="rating">
-                        ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
-                        <span class="rating-count">${product.rating}</span>
-                    </div>
-                    <span>•</span>
-                    <span>${product.reviews} reviews</span>
-                </div>
+                <!-- RATING SECTION REMOVED COMPLETELY -->
                 
                 <div class="price-container">
                     <div>
@@ -2910,13 +2880,6 @@ function openDescriptionModal(productId) {
                     <div class="flex items-center gap-2">
                         <span class="font-medium">Material:</span>
                         <span>${product.material}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-medium">Rating:</span>
-                        <span class="flex items-center">
-                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
-                            <span class="ml-1">(${product.reviews} reviews)</span>
-                        </span>
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="font-medium">Availability:</span>
