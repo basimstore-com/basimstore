@@ -195,34 +195,19 @@
             transition: all 0.3s ease;
         }
         
-        /* Product Grid - Professional Cards - IMPROVED FOR MOBILE */
+        /* Product Grid - Professional Cards - UPDATED: Mobile par 2 cards per row */
         .product-grid {
             display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            padding: 8px;
+            padding: 12px;
         }
         
-        /* Responsive Grid System */
-        @media (max-width: 360px) {
+        /* Responsive adjustments for mobile */
+        @media (max-width: 640px) {
             .product-grid {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                padding: 6px;
-            }
-        }
-        
-        @media (min-width: 361px) and (max-width: 480px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                padding: 8px;
-            }
-        }
-        
-        @media (min-width: 481px) and (max-width: 640px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 14px;
                 padding: 10px;
             }
         }
@@ -230,7 +215,7 @@
         @media (min-width: 641px) and (max-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 16px;
+                gap: 12px;
                 padding: 12px;
             }
         }
@@ -238,7 +223,7 @@
         @media (min-width: 769px) and (max-width: 1024px) {
             .product-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 18px;
+                gap: 14px;
                 padding: 14px;
             }
         }
@@ -246,7 +231,7 @@
         @media (min-width: 1025px) and (max-width: 1280px) {
             .product-grid {
                 grid-template-columns: repeat(5, 1fr);
-                gap: 20px;
+                gap: 16px;
                 padding: 16px;
             }
         }
@@ -254,8 +239,8 @@
         @media (min-width: 1281px) {
             .product-grid {
                 grid-template-columns: repeat(6, 1fr);
-                gap: 24px;
-                padding: 20px;
+                gap: 18px;
+                padding: 18px;
                 max-width: 1600px;
                 margin: 0 auto;
             }
@@ -263,7 +248,7 @@
         
         .product-card {
             background: var(--surface);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -273,8 +258,8 @@
         }
         
         .product-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
             border-color: rgba(33, 150, 243, 0.2);
         }
         
@@ -299,13 +284,13 @@
         /* Product Badges */
         .product-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 6px;
+            left: 6px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -315,10 +300,10 @@
         
         @media (max-width: 360px) {
             .product-badge {
-                padding: 4px 8px;
-                font-size: 9px;
-                top: 8px;
-                left: 8px;
+                padding: 2px 4px;
+                font-size: 8px;
+                top: 4px;
+                left: 4px;
             }
         }
         
@@ -338,14 +323,14 @@
             background: linear-gradient(135deg, #ff9800, #ffc107);
         }
         
-        /* Quick Action Buttons */
+        /* Quick Action Buttons - ONLY WISHLIST */
         .quick-actions {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 6px;
+            right: 6px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
             opacity: 0;
             transform: translateX(20px);
             transition: all 0.3s ease;
@@ -362,14 +347,14 @@
                 opacity: 1;
                 transform: translateX(0);
                 flex-direction: row;
-                gap: 4px;
+                gap: 3px;
             }
         }
         
         .quick-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0,0,0,0.1);
@@ -379,14 +364,14 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            font-size: 16px;
+            font-size: 14px;
         }
         
         @media (max-width: 360px) {
             .quick-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
             }
         }
         
@@ -399,82 +384,55 @@
         
         /* Product Info */
         .product-info {
-            padding: 14px;
+            padding: 10px;
         }
         
         @media (max-width: 360px) {
             .product-info {
-                padding: 12px;
+                padding: 8px;
             }
         }
         
         .product-title {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             line-height: 1.4;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: var(--text-primary);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            height: 34px;
         }
         
         @media (max-width: 360px) {
             .product-title {
-                font-size: 13px;
-            }
-        }
-        
-        .product-description {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 10px;
-            max-height: 120px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-        
-        @media (max-width: 360px) {
-            .product-description {
                 font-size: 11px;
+                height: 32px;
             }
         }
         
-        .product-description::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .product-description::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-            border-radius: 10px;
-        }
-        
-        .product-description::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.2);
-            border-radius: 10px;
-        }
-        
-        .product-description::-webkit-scrollbar-thumb:hover {
-            background: rgba(0,0,0,0.3);
+        /* Product Description - REMOVED FROM CARD */
+        .product-description {
+            display: none; /* Description now only in modal */
         }
         
         .product-meta {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 10px;
-            font-size: 11px;
+            gap: 4px;
+            margin-bottom: 8px;
+            font-size: 10px;
             color: var(--text-secondary);
         }
         
         .rating {
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             color: #ffb300;
-            font-size: 12px;
+            font-size: 10px;
         }
         
         .rating-count {
@@ -482,66 +440,43 @@
             font-weight: 500;
         }
         
-        .price-container {
+        /* NEW: Combined buttons container */
+        .product-buttons-container {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 14px;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
         }
         
-        .current-price {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1;
+        .button-row {
+            display: flex;
+            gap: 6px;
+            width: 100%;
         }
         
-        @media (max-width: 360px) {
-            .current-price {
-                font-size: 16px;
-            }
-        }
-        
-        .original-price {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-decoration: line-through;
-            margin-left: 6px;
-        }
-        
-        .discount-percent {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--error);
-            background: rgba(244, 67, 54, 0.1);
-            padding: 2px 5px;
-            border-radius: 5px;
-            margin-left: 6px;
-        }
-        
-        /* View Description Button */
+        /* View Description Button - UPDATED */
         .view-description-btn {
             background: rgba(33, 150, 243, 0.08);
             color: var(--primary);
             border: 1.5px solid rgba(33, 150, 243, 0.3);
-            padding: 7px 14px;
-            border-radius: 8px;
+            padding: 6px 8px;
+            border-radius: 6px;
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            width: 100%;
-            margin-top: 6px;
+            gap: 4px;
+            flex: 1;
+            text-align: center;
         }
         
         @media (max-width: 360px) {
             .view-description-btn {
-                padding: 6px 12px;
-                font-size: 11px;
+                padding: 5px 6px;
+                font-size: 10px;
             }
         }
         
@@ -555,39 +490,79 @@
             transform: translateY(0);
         }
         
-        /* Add to Cart Button */
+        /* Add to Cart Button - UPDATED */
         .add-to-cart-btn {
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
+            padding: 6px 8px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+            text-align: center;
         }
         
         @media (max-width: 360px) {
             .add-to-cart-btn {
-                padding: 7px 14px;
-                font-size: 12px;
+                padding: 5px 6px;
+                font-size: 11px;
             }
         }
         
         .add-to-cart-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
         }
         
         .add-to-cart-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+        }
+        
+        /* Price Container */
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .current-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        @media (max-width: 360px) {
+            .current-price {
+                font-size: 13px;
+            }
+        }
+        
+        .original-price {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            margin-left: 4px;
+        }
+        
+        .discount-percent {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--error);
+            background: rgba(244, 67, 54, 0.1);
+            padding: 1px 3px;
+            border-radius: 3px;
+            margin-left: 4px;
         }
         
         /* Fullscreen Image Viewer - Professional */
@@ -1028,7 +1003,7 @@
         
         /* Responsive Grid - Enhanced for all devices */
         @media (max-width: 360px) {
-            .grid-cols-4 {
+            .grid-cols-2 {
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 8px !important;
             }
@@ -1333,7 +1308,7 @@
             
             .product-grid {
                 gap: 8px;
-                padding: 4px;
+                padding: 6px;
             }
         }
         
@@ -1399,6 +1374,183 @@
         .lazy-load.loaded {
             opacity: 1;
         }
+        
+        /* ============================== */
+        /* SIDEBAR FIXES */
+        /* ============================== */
+        
+        /* Sidebar Menu - FIXED */
+        #sidebar {
+            position: fixed;
+            inset-y: 0;
+            left: 0;
+            width: 85vw;
+            max-width: 320px;
+            background: white;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        #sidebar > div {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            padding-bottom: calc(env(safe-area-inset-bottom) + 100px);
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        #sidebar > div::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #sidebar > div::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        #sidebar > div::-webkit-scrollbar-thumb {
+            background: rgba(33, 150, 243, 0.3);
+            border-radius: 10px;
+        }
+        
+        #sidebar > div::-webkit-scrollbar-thumb:hover {
+            background: rgba(33, 150, 243, 0.5);
+        }
+        
+        /* Sidebar buttons styling */
+        .sidebar-btn {
+            width: 100%;
+            text-align: left;
+            padding: 16px;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .sidebar-btn:hover {
+            background: rgba(0,0,0,0.05);
+            transform: translateX(4px);
+        }
+        
+        .sidebar-btn span:first-child {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-btn:hover span:first-child {
+            transform: scale(1.1);
+        }
+        
+        /* Sidebar overlay */
+        #sidebarOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        
+        #sidebarOverlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Sidebar open state */
+        #sidebar.open {
+            transform: translateX(0);
+        }
+        
+        /* Sidebar close button fix */
+        #sidebar .modal-close {
+            position: absolute;
+            right: 16px;
+            top: calc(env(safe-area-inset-top) + 16px);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.05);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        #sidebar .modal-close:hover {
+            background: rgba(0,0,0,0.1);
+            transform: rotate(90deg);
+        }
+        
+        /* Sidebar header fix */
+        #sidebar > div > div:first-child {
+            margin-bottom: 32px;
+            padding-right: 60px;
+        }
+        
+        /* Sidebar sections spacing */
+        #sidebar > div > div:not(:first-child) {
+            margin-top: 8px;
+        }
+        
+        /* Last section in sidebar */
+        #sidebar > div > div:last-child {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        /* Small screen sidebar adjustments */
+        @media (max-width: 320px) {
+            #sidebar {
+                width: 90vw;
+                max-width: 280px;
+            }
+            
+            #sidebar > div {
+                padding: 20px;
+                padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+            }
+            
+            .sidebar-btn {
+                padding: 14px;
+                gap: 12px;
+                font-size: 14px;
+            }
+            
+            .sidebar-btn span:first-child {
+                font-size: 20px;
+            }
+        }
+        
+        /* Landscape mode sidebar */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #sidebar > div {
+                padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-light text-dark">
@@ -1431,8 +1583,8 @@
     </header>
 
     <!-- Sidebar Menu -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 will-change-transform safe-area-top">
-        <div class="p-6 h-full overflow-y-auto scrollbar-thin">
+    <div id="sidebar" class="safe-area-top">
+        <div class="h-full overflow-y-auto">
             <div class="flex justify-between items-center mb-8">
                 <div class="flex flex-col">
                     <h2 class="text-2xl font-bold text-primary">Menu</h2>
@@ -1454,14 +1606,14 @@
             </div>
             
             <div class="space-y-1">
-                <button onclick="switchSection('home'); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">🏠</span>
+                <button onclick="switchSection('home'); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">🏠</span>
                     <span class="font-medium flex-1">Home</span>
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="switchSection('collection'); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">👕</span>
+                <button onclick="switchSection('collection'); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">👕</span>
                     <div class="flex-1">
                         <span class="font-medium block">All Collection</span>
                         <span class="text-sm text-gray-500">1600+ Products</span>
@@ -1469,8 +1621,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openCategoriesModal(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">📁</span>
+                <button onclick="openCategoriesModal(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">📁</span>
                     <div class="flex-1">
                         <span class="font-medium block">Categories</span>
                         <span class="text-sm text-gray-500">8+ Categories</span>
@@ -1478,8 +1630,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openWishlist(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">❤️</span>
+                <button onclick="openWishlist(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">❤️</span>
                     <div class="flex-1">
                         <span class="font-medium block">Wishlist</span>
                         <span id="sidebarWishlistCount" class="text-sm text-gray-500">0 items</span>
@@ -1487,8 +1639,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openCartModal(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">🛒</span>
+                <button onclick="openCartModal(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">🛒</span>
                     <div class="flex-1">
                         <span class="font-medium block">My Cart</span>
                         <span id="sidebarCartCount" class="text-sm text-gray-500">0 items</span>
@@ -1496,8 +1648,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openOrders(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">📦</span>
+                <button onclick="openOrders(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">📦</span>
                     <div class="flex-1">
                         <span class="font-medium block">My Orders</span>
                         <span class="text-sm text-gray-500">Order history</span>
@@ -1505,8 +1657,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openAccount(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">👤</span>
+                <button onclick="openAccount(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">👤</span>
                     <div class="flex-1">
                         <span class="font-medium block">Account</span>
                         <span class="text-sm text-gray-500">Profile & settings</span>
@@ -1514,8 +1666,8 @@
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="openSettings(); closeSidebar();" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">⚙️</span>
+                <button onclick="openSettings(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">⚙️</span>
                     <div class="flex-1">
                         <span class="font-medium block">Settings</span>
                         <span class="text-sm text-gray-500">App preferences</span>
@@ -1525,24 +1677,30 @@
             </div>
             
             <div class="mt-8 pt-8 border-t border-gray-200">
-                <button onclick="showHelp()" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">❓</span>
+                <button onclick="openSocialMediaModal(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">🌐</span>
+                    <span class="font-medium flex-1">Social Media</span>
+                    <span class="text-gray-400">→</span>
+                </button>
+                
+                <button onclick="showHelp(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">❓</span>
                     <span class="font-medium flex-1">Help & Support</span>
                     <span class="text-gray-400">→</span>
                 </button>
                 
-                <button onclick="showAbout()" class="sidebar-btn w-full text-left p-4 rounded-2xl hover:bg-gray-100 transition-colors flex items-center gap-4 group">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">ℹ️</span>
+                <button onclick="openAboutModal(); closeSidebar();" class="sidebar-btn group">
+                    <span class="group-hover:scale-110 transition-transform">ℹ️</span>
                     <span class="font-medium flex-1">About App</span>
                     <span class="text-gray-400">→</span>
                 </button>
             </div>
         </div>
     </div>
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeSidebar()"></div>
+    <div id="sidebarOverlay" onclick="closeSidebar()"></div>
 
     <!-- Main Content -->
-    <main id="appContent" class="pt-20 pb-24 px-2 overflow-y-auto h-full scrollbar-thin safe-area-top safe-area-bottom">
+    <main id="appContent" class="pt-20 pb-24 px-2 overflow-y-auto h-full safe-area-top safe-area-bottom">
         <!-- Home Content -->
         <div id="homeContent" class="section-content active">
             <!-- Hero Banner -->
@@ -1657,7 +1815,7 @@
                 
                 <!-- Category Filters -->
                 <div class="mb-6">
-                    <div class="flex overflow-x-auto gap-3 pb-3 scrollbar-thin px-1">
+                    <div class="flex overflow-x-auto gap-3 pb-3 px-1">
                         <button onclick="filterProducts('all')" class="filter-chip active">
                             All
                         </button>
@@ -1945,63 +2103,99 @@
         </div>
     </div>
 
-    <!-- Filters Modal -->
-    <div id="filtersModal" class="modal-overlay">
+    <!-- About App Modal -->
+    <div id="aboutModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h3 class="modal-title">Filters</h3>
-                    <p class="modal-subtitle">Refine your search</p>
+                    <h3 class="modal-title">About Basim Store</h3>
+                    <p class="modal-subtitle">Premium Fashion Collection</p>
                 </div>
-                <button onclick="closeFiltersModal()" class="modal-close">×</button>
+                <button onclick="closeAboutModal()" class="modal-close">×</button>
             </div>
             <div class="modal-body">
                 <div class="space-y-6">
-                    <!-- Price Range -->
-                    <div>
-                        <h4 class="font-semibold mb-4 text-gray-700">Price Range</h4>
-                        <div class="space-y-3">
-                            <input type="range" min="0" max="10000" value="10000" class="w-full" id="priceRange">
-                            <div class="flex justify-between text-sm text-gray-600">
-                                <span>₨ 0</span>
-                                <span id="maxPriceValue">₨ 10,000</span>
+                    <!-- App Info -->
+                    <div class="bg-gradient-to-r from-primary/5 to-accent/5 p-6 rounded-2xl">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-2xl">
+                                🛍️
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold">Basim Store v2.0</h4>
+                                <p class="text-gray-600">Premium Mobile Shopping Experience</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary">1600+</div>
+                                <div class="text-sm text-gray-600">Products</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-primary">8+</div>
+                                <div class="text-sm text-gray-600">Categories</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Sort By -->
+                    <!-- Features -->
                     <div>
-                        <h4 class="font-semibold mb-4 text-gray-700">Sort By</h4>
-                        <div class="space-y-2">
-                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
-                                <input type="radio" name="sort" value="popular" checked class="mr-3">
-                                <span>Popularity</span>
-                            </label>
-                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
-                                <input type="radio" name="sort" value="newest" class="mr-3">
-                                <span>Newest First</span>
-                            </label>
-                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
-                                <input type="radio" name="sort" value="price-low" class="mr-3">
-                                <span>Price: Low to High</span>
-                            </label>
-                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
-                                <input type="radio" name="sort" value="price-high" class="mr-3">
-                                <span>Price: High to Low</span>
-                            </label>
+                        <h4 class="font-semibold text-lg mb-3">Features</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    🚀
+                                </div>
+                                <div>
+                                    <p class="font-medium">Fast & Responsive</p>
+                                    <p class="text-sm text-gray-600">Optimized for all devices</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    🛒
+                                </div>
+                                <div>
+                                    <p class="font-medium">Easy Shopping</p>
+                                    <p class="text-sm text-gray-600">Add to cart with one click</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    📱
+                                </div>
+                                <div>
+                                    <p class="font-medium">WhatsApp Orders</p>
+                                    <p class="text-sm text-gray-600">Send orders directly via WhatsApp</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Developer Info -->
+                    <div class="border-t pt-6">
+                        <h4 class="font-semibold text-lg mb-3">Developer Information</h4>
+                        <div class="bg-gray-50 p-4 rounded-2xl">
+                            <p class="text-sm text-gray-600">
+                                Basim Store is developed with ❤️ using modern web technologies including:
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">HTML5</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">Tailwind CSS</span>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">JavaScript</span>
+                                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">Mobile-First</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="p-6 border-t bg-gray-50">
-                <div class="flex gap-3">
-                    <button onclick="applyFilters()" class="btn btn-primary flex-1">
-                        Apply Filters
-                    </button>
-                    <button onclick="resetFilters()" class="btn btn-secondary">
-                        Reset
-                    </button>
-                </div>
+                <button onclick="closeAboutModal()" class="btn btn-secondary">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -2075,6 +2269,67 @@
                     <p class="text-center text-gray-600 text-sm">
                         Follow us on social media for exclusive offers, new arrivals, and fashion tips!
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Modal -->
+    <div id="filtersModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Filters</h3>
+                    <p class="modal-subtitle">Refine your search</p>
+                </div>
+                <button onclick="closeFiltersModal()" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="space-y-6">
+                    <!-- Price Range -->
+                    <div>
+                        <h4 class="font-semibold mb-4 text-gray-700">Price Range</h4>
+                        <div class="space-y-3">
+                            <input type="range" min="0" max="10000" value="10000" class="w-full" id="priceRange">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>₨ 0</span>
+                                <span id="maxPriceValue">₨ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sort By -->
+                    <div>
+                        <h4 class="font-semibold mb-4 text-gray-700">Sort By</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="popular" checked class="mr-3">
+                                <span>Popularity</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="newest" class="mr-3">
+                                <span>Newest First</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="price-low" class="mr-3">
+                                <span>Price: Low to High</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-xl hover:bg-gray-100 cursor-pointer">
+                                <input type="radio" name="sort" value="price-high" class="mr-3">
+                                <span>Price: High to Low</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t bg-gray-50">
+                <div class="flex gap-3">
+                    <button onclick="applyFilters()" class="btn btn-primary flex-1">
+                        Apply Filters
+                    </button>
+                    <button onclick="resetFilters()" class="btn btn-secondary">
+                        Reset
+                    </button>
                 </div>
             </div>
         </div>
@@ -2575,21 +2830,11 @@ function createProductCard(product) {
                     <button class="quick-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
                         <span class="${wishlist.includes(product.id) ? 'text-red-500' : ''}">❤️</span>
                     </button>
-                    <button class="quick-btn" onclick="event.stopPropagation(); addToCart(${product.id})">
-                        🛒
-                    </button>
                 </div>
             </div>
             
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
-                
-                <p class="product-description">${product.description.substring(0, 150)}...</p>
-                
-                <!-- View Description Button -->
-                <button class="view-description-btn" onclick="event.stopPropagation(); openDescriptionModal(${product.id})">
-                    📖 View Full Description
-                </button>
                 
                 <div class="product-meta">
                     <div class="rating">
@@ -2608,11 +2853,19 @@ function createProductCard(product) {
                             <span class="discount-percent">Save ${product.discount}%</span>
                         ` : ''}
                     </div>
-                    
-                    <button class="add-to-cart-btn" 
-                            onclick="event.stopPropagation(); addToCart(${product.id})">
-                        Add
-                    </button>
+                </div>
+                
+                <!-- NEW: Combined buttons in one line -->
+                <div class="product-buttons-container">
+                    <div class="button-row">
+                        <button class="view-description-btn" onclick="event.stopPropagation(); openDescriptionModal(${product.id})">
+                            📖 View Description
+                        </button>
+                        <button class="add-to-cart-btn" 
+                                onclick="event.stopPropagation(); addToCart(${product.id})">
+                            Add to Cart
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3600,34 +3853,24 @@ function closeFullscreenViewer() {
 }
 
 // ==============================
-// SOCIAL MEDIA FUNCTIONS
+// SIDEBAR FUNCTIONS (FIXED)
 // ==============================
 
-function openSocialMediaModal() {
-    document.getElementById('socialMediaModal').classList.add('active');
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('show');
     document.body.style.overflow = 'hidden';
 }
 
-function closeSocialMediaModal() {
-    document.getElementById('socialMediaModal').classList.remove('active');
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
     document.body.style.overflow = '';
 }
 
 // ==============================
 // MODAL FUNCTIONS
 // ==============================
-
-function openSidebar() {
-    document.getElementById('sidebar').style.transform = 'translateX(0)';
-    document.getElementById('sidebarOverlay').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    document.getElementById('sidebar').style.transform = 'translateX(-100%)';
-    document.getElementById('sidebarOverlay').classList.add('hidden');
-    document.body.style.overflow = '';
-}
 
 function openCartModal() {
     document.getElementById('cartModal').classList.add('active');
@@ -3750,6 +3993,34 @@ function resetFilters() {
 }
 
 // ==============================
+// ABOUT APP MODAL FUNCTIONS
+// ==============================
+
+function openAboutModal() {
+    document.getElementById('aboutModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAboutModal() {
+    document.getElementById('aboutModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==============================
+// SOCIAL MEDIA FUNCTIONS
+// ==============================
+
+function openSocialMediaModal() {
+    document.getElementById('socialMediaModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSocialMediaModal() {
+    document.getElementById('socialMediaModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==============================
 // SECTION MANAGEMENT
 // ==============================
 
@@ -3830,12 +4101,7 @@ function openSettings() {
 }
 
 function showHelp() {
-    // Show social media modal instead of help
-    openSocialMediaModal();
-}
-
-function showAbout() {
-    showToast('Basim Store v2.0 - Premium Fashion Collection', 'info');
+    showToast('For help, please contact us on our social media platforms.', 'info');
 }
 
 // ==============================
@@ -3856,8 +4122,12 @@ function setupEventListeners() {
                 closeCheckoutModal();
             } else if (document.getElementById('searchModal').classList.contains('active')) {
                 closeSearchModal();
+            } else if (document.getElementById('aboutModal').classList.contains('active')) {
+                closeAboutModal();
             } else if (document.getElementById('socialMediaModal').classList.contains('active')) {
                 closeSocialMediaModal();
+            } else if (document.getElementById('sidebar').classList.contains('open')) {
+                closeSidebar();
             }
         }
         
@@ -3965,6 +4235,9 @@ function setupEventListeners() {
             document.getElementById('maxPriceValue').textContent = `₨ ${parseInt(this.value).toLocaleString()}`;
         });
     }
+    
+    // Sidebar overlay click
+    document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
 }
 
 function setupInfiniteScroll() {
