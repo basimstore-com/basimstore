@@ -382,34 +382,49 @@
             border-color: var(--primary);
         }
         
-        /* Product Info */
+        /* Product Info - FIXED FOR MOBILE */
         .product-info {
             padding: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 150px;
         }
         
         @media (max-width: 360px) {
             .product-info {
                 padding: 8px;
+                min-height: 135px;
             }
         }
         
+        /* Product Title - FIXED: NOW SHOWS ALL WORDS FULLY */
         .product-title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
-            line-height: 1.4;
+            line-height: 1.3;
             margin-bottom: 4px;
             color: var(--text-primary);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 34px;
+            display: block;
+            overflow: visible;
+            min-height: auto;
+            max-height: none;
+            flex-shrink: 0;
+            word-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
         }
         
         @media (max-width: 360px) {
             .product-title {
-                font-size: 11px;
-                height: 32px;
+                font-size: 13px;
+                line-height: 1.25;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .product-title {
+                font-size: 12px;
+                line-height: 1.2;
             }
         }
         
@@ -429,6 +444,8 @@
             flex-direction: column;
             gap: 6px;
             margin-top: 10px;
+            flex-grow: 1;
+            justify-content: flex-end;
         }
         
         .button-row {
@@ -454,12 +471,22 @@
             gap: 4px;
             flex: 1;
             text-align: center;
+            min-height: 32px;
         }
         
         @media (max-width: 360px) {
             .view-description-btn {
                 padding: 5px 6px;
                 font-size: 10px;
+                min-height: 28px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .view-description-btn {
+                font-size: 9px;
+                padding: 4px 5px;
+                min-height: 26px;
             }
         }
         
@@ -490,12 +517,22 @@
             gap: 4px;
             flex: 1;
             text-align: center;
+            min-height: 32px;
         }
         
         @media (max-width: 360px) {
             .add-to-cart-btn {
                 padding: 5px 6px;
                 font-size: 11px;
+                min-height: 28px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .add-to-cart-btn {
+                font-size: 10px;
+                padding: 4px 5px;
+                min-height: 26px;
             }
         }
         
@@ -510,12 +547,14 @@
             transform: none;
         }
         
-        /* Price Container */
+        /* Price Container - FIXED FOR MOBILE */
         .price-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
+            min-height: 24px;
+            flex-shrink: 0;
         }
         
         .current-price {
@@ -528,6 +567,12 @@
         @media (max-width: 360px) {
             .current-price {
                 font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .current-price {
+                font-size: 12px;
             }
         }
         
@@ -761,6 +806,30 @@
                 padding: 16px;
                 max-height: calc(90vh - 120px);
             }
+        }
+        
+        /* Cart Modal - FIXED FOR MOBILE */
+        #cartModal .modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 90vh;
+        }
+        
+        #cartModal .modal-header {
+            flex-shrink: 0;
+        }
+        
+        #cartModal .modal-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        
+        #cartModal .modal-body + div {
+            flex-shrink: 0;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
         }
         
         /* Product Description Modal */
@@ -1314,6 +1383,13 @@
         .truncate-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .truncate-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -2622,20 +2698,21 @@ const generateProducts = () => {
         const discount = Math.random() > 0.7 ? Math.floor(Math.random() * 40) + 10 : 0;
         const finalPrice = discount > 0 ? Math.floor(basePrice * (1 - discount/100)) : basePrice;
         
-        // Product name
+        // Product name - now with up to 16 words
         const productNames = {
-            'shirt': ['Formal Shirt', 'Casual T-Shirt', 'Polo Shirt', 'Designer Shirt', 'Linen Shirt'],
-            'dress': ['Evening Dress', 'Casual Dress', 'Party Gown', 'Maxi Dress', 'Summer Dress'],
-            'pants': ['Jeans', 'Chinos', 'Formal Trousers', 'Cargo Pants', 'Joggers'],
-            'jacket': ['Leather Jacket', 'Denim Jacket', 'Bomber Jacket', 'Blazer', 'Windbreaker'],
-            'sports': ['Track Suit', 'Sports Tee', 'Gym Shorts', 'Training Pants', 'Sports Jacket'],
-            'party': ['Party Wear', 'Designer Outfit', 'Evening Suit', 'Festive Dress', 'Celebration Wear'],
-            'top': ['Casual Top', 'Crop Top', 'Blouse', 'Kurti', 'Designer Top'],
-            'skirt': ['Mini Skirt', 'Midi Skirt', 'Pencil Skirt', 'A-Line Skirt', 'Pleated Skirt']
+            'shirt': ['Formal Shirt', 'Casual T-Shirt', 'Polo Shirt', 'Designer Shirt', 'Linen Shirt', 'Premium Cotton Shirt', 'Stylish Button Down Shirt', 'Elegant Office Wear Shirt', 'Fashionable Casual Wear Shirt', 'Comfortable Daily Use Shirt'],
+            'dress': ['Evening Dress', 'Casual Dress', 'Party Gown', 'Maxi Dress', 'Summer Dress', 'Elegant Evening Party Dress', 'Beautiful Casual Party Dress', 'Stylish Summer Casual Dress', 'Fashionable Office Party Dress', 'Comfortable Daily Wear Dress'],
+            'pants': ['Jeans', 'Chinos', 'Formal Trousers', 'Cargo Pants', 'Joggers', 'Premium Denim Jeans', 'Comfortable Casual Trousers', 'Stylish Office Wear Pants', 'Fashionable Casual Wear Trousers', 'Elegant Party Wear Pants'],
+            'jacket': ['Leather Jacket', 'Denim Jacket', 'Bomber Jacket', 'Blazer', 'Windbreaker', 'Premium Leather Winter Jacket', 'Stylish Denim Casual Jacket', 'Fashionable Office Wear Blazer', 'Comfortable Sports Windbreaker', 'Elegant Party Wear Jacket'],
+            'sports': ['Track Suit', 'Sports Tee', 'Gym Shorts', 'Training Pants', 'Sports Jacket', 'Premium Cotton Sports Wear', 'Comfortable Gym Training Suit', 'Stylish Outdoor Sports Tee', 'Fashionable Gym Workout Pants', 'Elegant Sports Casual Jacket'],
+            'party': ['Party Wear', 'Designer Outfit', 'Evening Suit', 'Festive Dress', 'Celebration Wear', 'Elegant Evening Party Outfit', 'Stylish Wedding Celebration Dress', 'Fashionable Festival Party Wear', 'Beautiful Ceremony Evening Suit', 'Premium Designer Party Dress'],
+            'top': ['Casual Top', 'Crop Top', 'Blouse', 'Kurti', 'Designer Top', 'Elegant Casual Wear Top', 'Stylish Summer Crop Top', 'Fashionable Office Wear Blouse', 'Beautiful Traditional Kurti', 'Premium Designer Casual Top'],
+            'skirt': ['Mini Skirt', 'Midi Skirt', 'Pencil Skirt', 'A-Line Skirt', 'Pleated Skirt', 'Elegant Party Wear Mini Skirt', 'Stylish Office Wear Pencil Skirt', 'Fashionable Casual Midi Skirt', 'Beautiful Summer A-Line Skirt', 'Premium Designer Pleated Skirt']
         };
         
         const nameType = productNames[category][Math.floor(Math.random() * productNames[category].length)];
-        const name = `${color} ${material} ${nameType} ${i}`;
+        // Create longer product names with more descriptive text
+        const name = `${color} ${material} ${nameType} for ${category === 'party' ? 'Special Occasions' : 'Daily Wear'} ${i} - Premium Quality Fashion Wear`;
         
         products.push({
             id: 1000 + i,
@@ -2811,7 +2888,7 @@ function createProductCard(product) {
             </div>
             
             <div class="product-info">
-                <h3 class="product-title">${product.name}</h3>
+                <h3 class="product-title truncate-3">${product.name}</h3>
                 
                 <!-- RATING SECTION REMOVED COMPLETELY -->
                 
