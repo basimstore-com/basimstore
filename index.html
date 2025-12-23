@@ -97,7 +97,7 @@
         }
         
         * {
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: rgba(33, 150, 243, 0.3); /* BLUE TOUCH HIGHLIGHT */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             box-sizing: border-box;
@@ -126,6 +126,145 @@
                 font-size: 16px;
             }
         }
+        
+        /* =========================================== */
+        /* TOUCH FEEDBACK FIXES - ADDED THESE */
+        /* =========================================== */
+        
+        /* Active/Touch State for ALL Clickable Elements */
+        button:active,
+        .btn:active,
+        .nav-item:active,
+        .product-card:active,
+        .category-badge:active,
+        .filter-chip:active,
+        .quick-btn:active,
+        .modal-close:active,
+        .sidebar-btn:active,
+        .viewer-btn:active,
+        .quantity-btn:active,
+        .form-control:active,
+        .add-to-cart-btn:active,
+        .view-description-btn:active {
+            transform: scale(0.97) !important;
+            opacity: 0.9 !important;
+            transition: transform 0.1s ease, opacity 0.1s ease !important;
+        }
+        
+        /* Specific Active States */
+        .nav-item:active {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(187, 222, 251, 0.2) 100%) !important;
+        }
+        
+        .add-to-cart-btn:active {
+            background: linear-gradient(135deg, var(--accent), #1565c0) !important;
+            transform: scale(0.95) translateY(-1px) !important;
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.4) !important;
+        }
+        
+        .product-card:active {
+            transform: translateY(-2px) scale(0.99) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .quick-btn:active {
+            background: var(--primary) !important;
+            color: white !important;
+            transform: scale(1.15) !important;
+        }
+        
+        .category-badge:active {
+            transform: scale(0.95) !important;
+            background: rgba(33, 150, 243, 0.2) !important;
+        }
+        
+        .filter-chip:active {
+            transform: scale(0.95) !important;
+            border-color: var(--primary) !important;
+        }
+        
+        .modal-close:active {
+            background: rgba(0, 0, 0, 0.15) !important;
+            transform: rotate(90deg) scale(0.95) !important;
+        }
+        
+        /* Ripple Effect for Better Touch Feedback */
+        .ripple-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple-effect:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .ripple-effect.rippling:after {
+            animation: ripple 0.6s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.7;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(40, 40);
+                opacity: 0;
+            }
+        }
+        
+        /* Touch Animation Classes */
+        .touch-press {
+            animation: touchPress 0.2s ease;
+        }
+        
+        @keyframes touchPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Loading State for Buttons */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+        
+        .btn-loading:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-spinner 0.8s linear infinite;
+        }
+        
+        @keyframes button-spinner {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* =========================================== */
+        /* EXISTING STYLES CONTINUED... */
+        /* =========================================== */
         
         /* Bottom Navigation - Professional Style - IMPROVED FOR MOBILE */
         .bottom-nav {
@@ -2407,6 +2546,195 @@
 
 <script>
 // ==============================
+// TOUCH FEEDBACK FUNCTIONS - ADDED THESE
+// ==============================
+
+// Add touch feedback to all buttons
+function addTouchFeedback() {
+    // Add ripple effect to all buttons
+    const buttons = document.querySelectorAll('button, .btn, .nav-item, .product-card, .category-badge, .filter-chip, .quick-btn, .modal-close, .sidebar-btn, .viewer-btn, .quantity-btn, .add-to-cart-btn, .view-description-btn');
+    
+    buttons.forEach(button => {
+        // Remove any existing listeners
+        button.removeEventListener('touchstart', handleTouchStart);
+        button.removeEventListener('touchend', handleTouchEnd);
+        button.removeEventListener('touchcancel', handleTouchEnd);
+        
+        // Add new listeners
+        button.addEventListener('touchstart', handleTouchStart, { passive: true });
+        button.addEventListener('touchend', handleTouchEnd, { passive: true });
+        button.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+        
+        // Add click feedback too
+        button.addEventListener('click', handleClickFeedback, { passive: true });
+    });
+    
+    console.log('Touch feedback added to', buttons.length, 'elements');
+}
+
+// Handle touch start
+function handleTouchStart(event) {
+    const button = event.currentTarget;
+    
+    // Prevent multiple touches
+    if (button.classList.contains('touching')) return;
+    
+    // Add visual feedback
+    button.classList.add('touching');
+    
+    // Add ripple effect if supported
+    if (button.classList.contains('ripple-effect')) {
+        button.classList.add('rippling');
+    }
+    
+    // Add scale effect
+    button.style.transform = 'scale(0.97)';
+    button.style.opacity = '0.9';
+    button.style.transition = 'transform 0.1s ease, opacity 0.1s ease';
+    
+    // Vibrate if supported (mobile)
+    if (navigator.vibrate) {
+        navigator.vibrate(10);
+    }
+}
+
+// Handle touch end
+function handleTouchEnd(event) {
+    const button = event.currentTarget;
+    
+    // Remove visual feedback
+    button.classList.remove('touching');
+    button.classList.remove('rippling');
+    
+    // Reset scale
+    button.style.transform = '';
+    button.style.opacity = '';
+    button.style.transition = '';
+    
+    // Prevent default if it's a link-like button
+    if (button.tagName === 'BUTTON' || button.tagName === 'A') {
+        event.preventDefault();
+    }
+}
+
+// Handle click feedback
+function handleClickFeedback(event) {
+    const button = event.currentTarget;
+    
+    // Add click animation
+    button.classList.add('touch-press');
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+        button.classList.remove('touch-press');
+    }, 200);
+    
+    // Show toast for important actions
+    const action = button.getAttribute('onclick') || button.textContent;
+    if (action.includes('addToCart') || action.includes('Add to Cart')) {
+        showTouchFeedback('Added to cart!');
+    }
+}
+
+// Show touch feedback message
+function showTouchFeedback(message) {
+    // Create feedback element
+    const feedback = document.createElement('div');
+    feedback.className = 'touch-feedback';
+    feedback.textContent = message;
+    feedback.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-weight: 600;
+        z-index: 99999;
+        pointer-events: none;
+        animation: fadeInOut 1.5s ease;
+    `;
+    
+    // Add to body
+    document.body.appendChild(feedback);
+    
+    // Remove after animation
+    setTimeout(() => {
+        feedback.remove();
+    }, 1500);
+}
+
+// Initialize touch feedback
+function initializeTouchFeedback() {
+    // Add CSS for touch feedback
+    const style = document.createElement('style');
+    style.textContent = `
+        .touching {
+            transform: scale(0.97) !important;
+            opacity: 0.9 !important;
+            transition: transform 0.1s ease, opacity 0.1s ease !important;
+        }
+        
+        .touch-feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: 600;
+            z-index: 99999;
+            pointer-events: none;
+            animation: fadeInOut 1.5s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            15% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            30% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+        
+        /* Prevent text selection on buttons */
+        button, .btn {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        /* Improve tap target size on mobile */
+        @media (max-width: 768px) {
+            button, .btn, .nav-item {
+                min-height: 48px;
+                min-width: 48px;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add touch feedback to all buttons
+    setTimeout(() => {
+        addTouchFeedback();
+    }, 100);
+    
+    // Re-add touch feedback when new elements are added
+    const observer = new MutationObserver(() => {
+        addTouchFeedback();
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+// ==============================
 // REAL PRODUCT IMAGE LINKS
 // ==============================
 
@@ -2764,6 +3092,9 @@ function initializeApp() {
     document.getElementById('appContent').style.paddingTop = 'calc(env(safe-area-inset-top) + 70px)';
     document.getElementById('appContent').style.paddingBottom = 'calc(env(safe-area-inset-bottom) + 64px)';
     
+    // Initialize touch feedback FIRST
+    initializeTouchFeedback();
+    
     // Load ALL 1600 products on home page
     loadHomeProducts();
     loadCollectionProducts();
@@ -2795,6 +3126,9 @@ function loadHomeProducts() {
     
     // ALL 1600 PRODUCTS WILL BE DISPLAYED ON HOME PAGE
     container.innerHTML = allProducts.map(product => createProductCard(product)).join('');
+    
+    // Re-add touch feedback for new elements
+    setTimeout(() => addTouchFeedback(), 100);
 }
 
 function loadCollectionProducts() {
@@ -2842,6 +3176,9 @@ function loadMoreProducts() {
         if (displayedProducts.length >= filteredProducts.length) {
             endOfResults.classList.remove('hidden');
         }
+        
+        // Re-add touch feedback for new elements
+        setTimeout(() => addTouchFeedback(), 100);
     }, 500);
 }
 
@@ -3172,6 +3509,9 @@ function updateCartUI() {
             </div>
         `).join('');
     }
+    
+    // Re-add touch feedback
+    setTimeout(() => addTouchFeedback(), 100);
 }
 
 function updateCartQuantity(productId, change) {
@@ -3290,6 +3630,9 @@ function updateWishlistUI() {
             </div>
         `).join('');
     }
+    
+    // Re-add touch feedback
+    setTimeout(() => addTouchFeedback(), 100);
 }
 
 function saveWishlist() {
@@ -3361,6 +3704,9 @@ function updateSearchHistory() {
             ${term}
         </button>
     `).join('');
+    
+    // Re-add touch feedback
+    setTimeout(() => addTouchFeedback(), 100);
 }
 
 function performSearch(term) {
@@ -3637,6 +3983,9 @@ function renderCheckoutForm() {
     
     // Initialize country selection
     handleCheckoutCountryChange();
+    
+    // Re-add touch feedback
+    setTimeout(() => addTouchFeedback(), 100);
 }
 
 function handleCheckoutCountryChange() {
