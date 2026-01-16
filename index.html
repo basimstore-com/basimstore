@@ -1977,7 +1977,11 @@
                     </button>
                 </div>
                 <div id="homeProductsGrid" class="product-grid">
-                    <!-- ALL 1600 PRODUCTS WILL BE LOADED HERE -->
+                    <!-- Products will be loaded here in chunks of 200 -->
+                </div>
+                <div id="homeLoadingIndicator" class="text-center py-8 hidden">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-gray-600">Loading more products...</p>
                 </div>
             </div>
         </div>
@@ -2043,7 +2047,7 @@
 
                 <!-- Products Grid -->
                 <div id="productsGrid" class="product-grid">
-                    <!-- Products will be loaded here -->
+                    <!-- Products will be loaded here in chunks -->
                 </div>
                 
                 <!-- Loading and End Indicators -->
@@ -2862,11 +2866,11 @@ const pakistanData = {
         "Faisalabad": ["Faisalabad City", "Jaranwala", "Samundri", "Tandlianwala", "Chak Jhumra", "Iqbal Town", "Madina Town", "Jinnah Town"],
         "Rawalpindi": ["Rawalpindi City", "Rawalpindi Cantt", "Taxila", "Gujar Khan", "Kahuta", "Kallar Syedan", "Murree", "Kotli Sattian"],
         "Gujranwala": ["Gujranwala City", "Gujranwala Cantt", "Kamoke", "Nowshera Virkan", "Wazirabad"],
+        "Gujrat": ["Gujrat City", "Kharian", "Sarai Alamgir", "Kunjah", "Dinga"],
         "Multan": ["Multan City", "Multan Sadar", "Shujabad", "Jalalpur Pirwala", "Qadirpur Rawan"],
         "Sargodha": ["Sargodha City", "Sargodha Cantt", "Bhalwal", "Sillanwali", "Sahiwal", "Kot Momin"],
         "Bahawalpur": ["Bahawalpur City", "Bahawalpur Sadar", "Ahmadpur East", "Khairpur Tamewali", "Hasilpur", "Yazman"],
         "Sialkot": ["Sialkot City", "Sialkot Cantt", "Daska", "Pasrur", "Sambrial"],
-        "Gujrat": ["Gujrat City", "Kharian", "Sarai Alamgir", "Kunjah", "Dinga"],
         "Sheikhupura": ["Sheikhupura City", "Ferozewala", "Muridke", "Sharqpur", "Safdarabad"],
         "Jhelum": ["Jhelum City", "Pind Dadan Khan", "Sohawa", "Dina"],
         "Kasur": ["Kasur City", "Chunian", "Pattoki", "Kot Radha Kishan"],
@@ -3074,10 +3078,14 @@ let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 let currentSection = 'home';
 let currentFilter = 'all';
 let currentView = 'grid';
-let currentPage = 0;
-const PRODUCTS_PER_PAGE = 20;
-let displayedProducts = [];
+let homePage = 0;
+let collectionPage = 0;
+const PRODUCTS_PER_CHUNK = 200; // 200 products per load
+let displayedHomeProducts = [];
+let displayedCollectionProducts = [];
 let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+let homeObserver = null;
+let collectionObserver = null;
 
 // ==============================
 // INITIALIZATION
@@ -3095,8 +3103,10 @@ function initializeApp() {
     // Initialize touch feedback FIRST
     initializeTouchFeedback();
     
-    // Load ALL 1600 products on home page
+    // Load initial 200 products on home page
     loadHomeProducts();
+    
+    // Load initial 200 products on collection page
     loadCollectionProducts();
     
     // Update UI
@@ -3106,7 +3116,9 @@ function initializeApp() {
     
     // Setup event listeners
     setupEventListeners();
-    setupInfiniteScroll();
+    
+    // Initialize Intersection Observers
+    initializeObservers();
     
     // Show welcome message
     if (!localStorage.getItem('welcomeShown')) {
@@ -3118,80 +3130,194 @@ function initializeApp() {
 }
 
 // ==============================
-// PRODUCT LOADING
+// OBSERVER FUNCTIONS (LAZY LOADING)
+// ==============================
+
+function initializeObservers() {
+    // Home page observer
+    const homeLoadingIndicator = document.getElementById('homeLoadingIndicator');
+    if (homeLoadingIndicator) {
+        homeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && currentSection === 'home') {
+                    loadMoreHomeProducts();
+                }
+            });
+        }, {
+            rootMargin: '100px', // Load 100px before reaching the bottom
+            threshold: 0.1
+        });
+        
+        homeObserver.observe(homeLoadingIndicator);
+    }
+    
+    // Collection page observer
+    const collectionLoadingIndicator = document.getElementById('loadingIndicator');
+    if (collectionLoadingIndicator) {
+        collectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && currentSection === 'collection') {
+                    loadMoreCollectionProducts();
+                }
+            });
+        }, {
+            rootMargin: '100px',
+            threshold: 0.1
+        });
+        
+        collectionObserver.observe(collectionLoadingIndicator);
+    }
+}
+
+// ==============================
+// HOME PAGE PRODUCT LOADING
 // ==============================
 
 function loadHomeProducts() {
+    homePage = 0;
+    displayedHomeProducts = [];
+    
+    // Clear existing products
+    const container = document.getElementById('homeProductsGrid');
+    container.innerHTML = '';
+    
+    // Show loading indicator
+    const loadingIndicator = document.getElementById('homeLoadingIndicator');
+    loadingIndicator.classList.remove('hidden');
+    
+    // Load first chunk
+    setTimeout(() => {
+        loadMoreHomeProducts();
+    }, 300);
+}
+
+function loadMoreHomeProducts() {
+    const start = homePage * PRODUCTS_PER_CHUNK;
+    const end = start + PRODUCTS_PER_CHUNK;
+    
+    // Get next chunk of products
+    const newProducts = allProducts.slice(start, end);
+    
+    if (newProducts.length === 0) {
+        // Hide loading indicator when no more products
+        document.getElementById('homeLoadingIndicator').classList.add('hidden');
+        return;
+    }
+    
+    displayedHomeProducts = [...displayedHomeProducts, ...newProducts];
+    homePage++;
+    
+    // Render new products
+    renderHomeProducts(newProducts);
+    
+    // Hide loading indicator temporarily
+    const loadingIndicator = document.getElementById('homeLoadingIndicator');
+    loadingIndicator.classList.add('hidden');
+    
+    // Show loading indicator again if there are more products
+    if (displayedHomeProducts.length < allProducts.length) {
+        setTimeout(() => {
+            loadingIndicator.classList.remove('hidden');
+        }, 500);
+    }
+}
+
+function renderHomeProducts(products) {
     const container = document.getElementById('homeProductsGrid');
     
-    // ALL 1600 PRODUCTS WILL BE DISPLAYED ON HOME PAGE
-    container.innerHTML = allProducts.map(product => createProductCard(product)).join('');
+    // Add new products to container
+    const newProductsHTML = products.map(product => createProductCard(product)).join('');
+    container.innerHTML += newProductsHTML;
     
     // Re-add touch feedback for new elements
     setTimeout(() => addTouchFeedback(), 100);
 }
 
+// ==============================
+// COLLECTION PAGE PRODUCT LOADING
+// ==============================
+
 function loadCollectionProducts() {
-    currentPage = 0;
-    displayedProducts = [];
-    loadMoreProducts();
-}
-
-function loadMoreProducts() {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    const endOfResults = document.getElementById('endOfResults');
-    const noResults = document.getElementById('noResults');
+    collectionPage = 0;
+    displayedCollectionProducts = [];
     
-    loadingIndicator.classList.remove('hidden');
-    
-    setTimeout(() => {
-        const start = currentPage * PRODUCTS_PER_PAGE;
-        const end = start + PRODUCTS_PER_PAGE;
-        
-        // Filter products based on current filter
-        let filteredProducts = allProducts;
-        if (currentFilter !== 'all') {
-            filteredProducts = allProducts.filter(p => p.category === currentFilter);
-        }
-        
-        const newProducts = filteredProducts.slice(start, end);
-        
-        if (newProducts.length === 0) {
-            if (displayedProducts.length === 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                endOfResults.classList.remove('hidden');
-            }
-            loadingIndicator.classList.add('hidden');
-            return;
-        }
-        
-        displayedProducts = [...displayedProducts, ...newProducts];
-        currentPage++;
-        
-        renderCollectionProducts();
-        loadingIndicator.classList.add('hidden');
-        noResults.classList.add('hidden');
-        
-        if (displayedProducts.length >= filteredProducts.length) {
-            endOfResults.classList.remove('hidden');
-        }
-        
-        // Re-add touch feedback for new elements
-        setTimeout(() => addTouchFeedback(), 100);
-    }, 500);
-}
-
-function renderCollectionProducts() {
+    // Clear existing products
     const container = document.getElementById('productsGrid');
+    container.innerHTML = '';
     
-    if (currentPage === 1) {
-        container.innerHTML = displayedProducts.map(product => createProductCard(product)).join('');
+    // Show loading indicator
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator.classList.remove('hidden');
+    document.getElementById('endOfResults').classList.add('hidden');
+    
+    // Load first chunk
+    setTimeout(() => {
+        loadMoreCollectionProducts();
+    }, 300);
+}
+
+function loadMoreCollectionProducts() {
+    const start = collectionPage * PRODUCTS_PER_CHUNK;
+    const end = start + PRODUCTS_PER_CHUNK;
+    
+    // Filter products based on current filter
+    let filteredProducts = allProducts;
+    if (currentFilter !== 'all') {
+        filteredProducts = allProducts.filter(p => p.category === currentFilter);
+    }
+    
+    const newProducts = filteredProducts.slice(start, end);
+    
+    if (newProducts.length === 0) {
+        // Hide loading indicator
+        document.getElementById('loadingIndicator').classList.add('hidden');
+        
+        // Show end of results if this is the first load
+        if (displayedCollectionProducts.length === 0) {
+            document.getElementById('noResults').classList.remove('hidden');
+        } else {
+            document.getElementById('endOfResults').classList.remove('hidden');
+        }
+        return;
+    }
+    
+    displayedCollectionProducts = [...displayedCollectionProducts, ...newProducts];
+    collectionPage++;
+    
+    // Render new products
+    renderCollectionProducts(newProducts);
+    
+    // Hide loading indicator temporarily
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator.classList.add('hidden');
+    
+    // Hide no results if showing products
+    document.getElementById('noResults').classList.add('hidden');
+    
+    // Show loading indicator again if there are more products
+    if (displayedCollectionProducts.length < filteredProducts.length) {
+        setTimeout(() => {
+            loadingIndicator.classList.remove('hidden');
+        }, 500);
     } else {
-        const newProductsHTML = displayedProducts.slice(-PRODUCTS_PER_PAGE).map(product => createProductCard(product)).join('');
-        container.innerHTML += newProductsHTML;
+        document.getElementById('endOfResults').classList.remove('hidden');
     }
 }
+
+function renderCollectionProducts(products) {
+    const container = document.getElementById('productsGrid');
+    
+    // Add new products to container
+    const newProductsHTML = products.map(product => createProductCard(product)).join('');
+    container.innerHTML += newProductsHTML;
+    
+    // Re-add touch feedback for new elements
+    setTimeout(() => addTouchFeedback(), 100);
+}
+
+// ==============================
+// PRODUCT CARD TEMPLATE
+// ==============================
 
 function createProductCard(product) {
     return `
@@ -3353,8 +3479,8 @@ function closeDescriptionModal() {
 
 function filterProducts(category) {
     currentFilter = category;
-    currentPage = 0;
-    displayedProducts = [];
+    collectionPage = 0;
+    displayedCollectionProducts = [];
     
     // Update active filter chip
     document.querySelectorAll('.filter-chip').forEach(chip => {
@@ -3376,7 +3502,7 @@ function filterProducts(category) {
     document.getElementById('noResults').classList.add('hidden');
     
     // Load products
-    loadMoreProducts();
+    loadCollectionProducts();
     
     // Scroll to top
     document.getElementById('appContent').scrollTop = 0;
@@ -3398,7 +3524,9 @@ function toggleView() {
         grid.classList.add('grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4', 'xl:grid-cols-5');
     }
     
-    renderCollectionProducts();
+    // Re-render collection products
+    const container = document.getElementById('productsGrid');
+    container.innerHTML = displayedCollectionProducts.map(product => createProductCard(product)).join('');
 }
 
 // ==============================
@@ -3560,8 +3688,31 @@ function toggleWishlist(productId) {
     
     updateWishlistUI();
     saveWishlist();
-    renderCollectionProducts();
-    loadHomeProducts();
+    
+    // Update product cards in both home and collection
+    updateProductCardsWishlistState(productId);
+}
+
+function updateProductCardsWishlistState(productId) {
+    // Update home page
+    const homeCards = document.querySelectorAll(`#homeProductsGrid .product-card[data-id="${productId}"] .quick-btn span`);
+    homeCards.forEach(span => {
+        if (wishlist.includes(productId)) {
+            span.classList.add('text-red-500');
+        } else {
+            span.classList.remove('text-red-500');
+        }
+    });
+    
+    // Update collection page
+    const collectionCards = document.querySelectorAll(`#productsGrid .product-card[data-id="${productId}"] .quick-btn span`);
+    collectionCards.forEach(span => {
+        if (wishlist.includes(productId)) {
+            span.classList.add('text-red-500');
+        } else {
+            span.classList.remove('text-red-500');
+        }
+    });
 }
 
 function updateWishlistUI() {
@@ -3655,16 +3806,22 @@ function searchProducts(query) {
     );
     
     if (results.length > 0) {
-        displayedProducts = results.slice(0, PRODUCTS_PER_PAGE);
-        currentPage = 1;
-        renderCollectionProducts();
+        displayedCollectionProducts = results.slice(0, PRODUCTS_PER_CHUNK);
+        collectionPage = 1;
+        
+        // Clear and render results
+        const container = document.getElementById('productsGrid');
+        container.innerHTML = displayedCollectionProducts.map(product => createProductCard(product)).join('');
+        
         document.getElementById('noResults').classList.add('hidden');
         document.getElementById('endOfResults').classList.add('hidden');
+        document.getElementById('loadingIndicator').classList.add('hidden');
     } else {
-        displayedProducts = [];
+        displayedCollectionProducts = [];
         document.getElementById('productsGrid').innerHTML = '';
         document.getElementById('noResults').classList.remove('hidden');
         document.getElementById('endOfResults').classList.add('hidden');
+        document.getElementById('loadingIndicator').classList.add('hidden');
     }
 }
 
@@ -4367,9 +4524,12 @@ function applyFilters() {
             break;
     }
     
-    displayedProducts = filtered.slice(0, PRODUCTS_PER_PAGE);
-    currentPage = 1;
-    renderCollectionProducts();
+    displayedCollectionProducts = filtered.slice(0, PRODUCTS_PER_CHUNK);
+    collectionPage = 1;
+    
+    // Clear and render results
+    const container = document.getElementById('productsGrid');
+    container.innerHTML = displayedCollectionProducts.map(product => createProductCard(product)).join('');
     
     closeFiltersModal();
     showToast('Filters applied successfully!', 'success');
@@ -4627,26 +4787,6 @@ function setupEventListeners() {
     
     // Sidebar overlay click
     document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
-}
-
-function setupInfiniteScroll() {
-    const appContent = document.getElementById('appContent');
-    let isLoading = false;
-    
-    appContent.addEventListener('scroll', function() {
-        if (currentSection !== 'collection') return;
-        if (isLoading) return;
-        
-        const scrollTop = appContent.scrollTop;
-        const scrollHeight = appContent.scrollHeight;
-        const clientHeight = appContent.clientHeight;
-        
-        if (scrollTop + clientHeight >= scrollHeight - 200) {
-            isLoading = true;
-            loadMoreProducts();
-            setTimeout(() => isLoading = false, 1000);
-        }
-    });
 }
 
 // ==============================
